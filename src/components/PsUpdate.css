@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+.container {
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  flex-direction: column; /* Change to column layout for smaller screens */
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.133);
+  gap: 8px;
+}
+
+.left-pane, .right-pane {
+  width: 100%; /* Full width for smaller screens */
+  padding: 24px;
+  overflow-y: auto;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500; /* Medium weight for labels */
+}
+
+.input-group input, .input-group textarea, .input-group select {
+  margin-top: 6px;
+  height: 52px;
+  width: 100%; /* Full width for smaller screens */
+  padding: 8px 24px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border-style: none;
+  background-color: rgb(235, 235, 235);
+  border: 1px solid #007BFF;
+  font-size: 16px;
+}
+
+.input-group select option {
+  padding: 8px;
+  background-color: #fff;
+  color: #333;
+  font-size: 16px;
+}
+
+.input-group select:focus {
+  border-color: #ffffff;
+  outline: none;
+}
+
+.editor-container {
+  height: 50%;
+}
+
+.test-cases-container {
+  height: 40%;
+  margin-top: 200px;
+  overflow-y: auto;
+}
+
+.test-case {
+  margin-bottom: 10px;
+}
+
+.test-case h4 {
+  margin-bottom: 10px;
+}
+
+.button-container {
+  margin-left: 16px;
+  position: relative;
+  display: flex;
+  
+}
+
+.add-button, .submit-button {
+  font-family: 'Roboto', sans-serif; /* Ensure buttons use Roboto */
+}
+
+.add-button:hover, .submit-button:hover {
+  background-color: #218838;
+}
+
+.submit-button:hover {
+  background-color: #218838;
+}
+
+/* Media queries for responsiveness */
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row; /* Row layout for larger screens */
+  }
+
+  .left-pane, .right-pane {
+    width: 50%; /* Split width for larger screens */
+  }
+
+  .input-group input, .input-group textarea, .input-group select {
+    width: 40%; /* Adjust width for larger screens */
+  }
+}
