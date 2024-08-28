@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Editor } from '@monaco-editor/react';
 
-const MonacoEditorComponent = ({ code, setCode }) => {
+const MonacoEditorComponent = ({ code, setCode, psDetails }) => {
   const [language, setLanguage] = useState('javascript');
+
+  useEffect(() => {
+    if (psDetails) {
+      setCode(psDetails.code[language]);
+    }
+  }, [language, psDetails, setCode]);
 
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
