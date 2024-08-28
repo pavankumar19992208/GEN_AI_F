@@ -126,6 +126,7 @@ const PsUpdate = () => {
           </select>
           {isOtherTopic && (
             <input
+              className='selected'
               type="text"
               value={selectedTopic}
               onChange={(e) => setSelectedTopic(e.target.value)}

@@ -53,6 +53,10 @@
   outline: none;
 }
 
+.selected{
+  margin-left: 12px;
+}
+
 .editor-container {
   height: 50%;
 }
