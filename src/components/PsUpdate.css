@@ -24,13 +24,14 @@
 
 .input-group label {
   display: block;
+  font-size: 16px;
   margin-bottom: 5px;
   font-weight: 500; /* Medium weight for labels */
 }
 
 .input-group input, .input-group textarea, .input-group select {
   margin-top: 6px;
-  height: 52px;
+  height: 44px;
   width: 100%; /* Full width for smaller screens */
   padding: 8px 24px;
   box-sizing: border-box;
@@ -38,14 +39,14 @@
   border-style: none;
   background-color: rgb(235, 235, 235);
   border: 1px solid #007BFF;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .input-group select option {
   padding: 8px;
   background-color: #fff;
   color: #333;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .input-group select:focus {

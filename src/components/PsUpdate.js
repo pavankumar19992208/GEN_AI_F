@@ -171,7 +171,7 @@ const PsUpdate = () => {
           <textarea
             value={problemStatement}
             onChange={handleProblemStatementChange}
-            style={{ width: '100%', height: '100px' }}
+            style={{ width: '60%', height: '100px' }}
           />
         </div>
       </div>
