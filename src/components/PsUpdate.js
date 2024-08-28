@@ -1,13 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Editor } from '@monaco-editor/react';
 
 const PsUpdate = () => {
   const [language, setLanguage] = useState('javascript');
   const [code, setCode] = useState({ javascript: '', python: '', c: '', cpp: '', java: '' });
-  const [topic, setTopic] = useState('');
-  const [subTopic, setSubTopic] = useState('');
+  const [listTopics, setListTopics] = useState({});
+  const [selectedTopic, setSelectedTopic] = useState('');
+  const [selectedSubTopic, setSelectedSubTopic] = useState('');
+  const [problemStatementTitle, setProblemStatementTitle] = useState('');
   const [problemStatement, setProblemStatement] = useState('');
   const [testCases, setTestCases] = useState([{ input: '', expectedOutput: '' }]);
+  const [isOtherTopic, setIsOtherTopic] = useState(false);
+  const [isOtherSubTopic, setIsOtherSubTopic] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/getList');
+        const data = await response.json();
+        setListTopics(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
@@ -33,8 +51,9 @@ const PsUpdate = () => {
 
   const handleSubmit = async () => {
     const data = {
-      topic,
-      subTopic,
+      topic: selectedTopic,
+      subTopic: selectedSubTopic,
+      problemStatementTitle,
       problemStatement,
       code,
       testCases,
@@ -60,25 +79,76 @@ const PsUpdate = () => {
     }
   };
 
+  const handleTopicChange = (event) => {
+    const value = event.target.value;
+    setSelectedTopic(value);
+    setIsOtherTopic(value === 'other');
+    if (value !== 'other') {
+      setSelectedSubTopic('');
+      setIsOtherSubTopic(false);
+    }
+  };
+
+  const handleSubTopicChange = (event) => {
+    const value = event.target.value;
+    setSelectedSubTopic(value);
+    setIsOtherSubTopic(value === 'other');
+  };
+
   return (
     <div style={{ display: 'flex', width: '100%', height: '100vh' }}>
       <div style={{ width: '50%', padding: '10px', overflowY: 'auto' }}>
         <div>
           <label>Topic Title:</label>
-          <input
-            type="text"
-            value={topic}
-            onChange={(e) => setTopic(e.target.value)}
-            placeholder="Enter topic"
-          />
+          <select
+            value={selectedTopic}
+            onChange={handleTopicChange}
+          >
+            <option value="">Select Topic</option>
+            {Object.keys(listTopics).map((topic) => (
+              <option key={topic} value={topic}>{topic}</option>
+            ))}
+            <option value="other">Other</option>
+          </select>
+          {isOtherTopic && (
+            <input
+              type="text"
+              value={selectedTopic}
+              onChange={(e) => setSelectedTopic(e.target.value)}
+              placeholder="Enter topic"
+            />
+          )}
         </div>
         <div>
           <label>Sub Topic Title:</label>
+          {isOtherSubTopic ? (
+            <input
+              type="text"
+              value={selectedSubTopic}
+              onChange={(e) => setSelectedSubTopic(e.target.value)}
+              placeholder="Enter sub-topic"
+            />
+          ) : (
+            <select
+              value={selectedSubTopic}
+              onChange={handleSubTopicChange}
+              disabled={!selectedTopic}
+            >
+              <option value="">Select Sub-Topic</option>
+              {selectedTopic && listTopics[selectedTopic]?.map((subTopic) => (
+                <option key={subTopic} value={subTopic}>{subTopic}</option>
+              ))}
+              <option value="other">Other</option>
+            </select>
+          )}
+        </div>
+        <div>
+          <label>Problem Statement Title:</label>
           <input
             type="text"
-            value={subTopic}
-            onChange={(e) => setSubTopic(e.target.value)}
-            placeholder="Enter sub-topic"
+            value={problemStatementTitle}
+            onChange={(e) => setProblemStatementTitle(e.target.value)}
+            placeholder="Enter problem statement title"
           />
         </div>
         <div>
