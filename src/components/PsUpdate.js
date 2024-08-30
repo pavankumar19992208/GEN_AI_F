@@ -7,8 +7,9 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { TransitionGroup } from 'react-transition-group';
-import './PsUpdate.css';
+import './PsUpdate.css'; // Import the CSS file
 
 const PsUpdate = () => {
   const [language, setLanguage] = useState('javascript');
@@ -21,6 +22,8 @@ const PsUpdate = () => {
   const [testCases, setTestCases] = useState([{ input: '', expectedOutput: '' }]);
   const [isOtherTopic, setIsOtherTopic] = useState(false);
   const [isOtherSubTopic, setIsOtherSubTopic] = useState(false);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [expandedTestCase, setExpandedTestCase] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,6 +53,10 @@ const PsUpdate = () => {
 
   const addTestCase = () => {
     setTestCases([...testCases, { input: '', expectedOutput: '' }]);
+  };
+
+  const handleExpandClick = (index) => {
+    setExpandedTestCase(expandedTestCase === index ? null : index);
   };
 
   const handleTestCaseChange = (index, field, value) => {
@@ -110,146 +117,172 @@ const PsUpdate = () => {
   };
 
   return (
-    <div className="container">
-      <div className="left-pane">
-        <div className="input-group">
-          <label>Topic Title:</label>
-          <select
-            value={selectedTopic}
-            onChange={handleTopicChange}
-          >
-            <option value="">Select Topic</option>
-            {Object.keys(listTopics).map((topic) => (
-              <option key={topic} value={topic}>{topic}</option>
-            ))}
-            <option value="other">Other</option>
-          </select>
-          {isOtherTopic && (
-            <input
-              className='selected'
-              type="text"
-              value={selectedTopic}
-              onChange={(e) => setSelectedTopic(e.target.value)}
-              placeholder="Enter topic"
-            />
-          )}
-        </div>
-        <div className="input-group">
-          <label>Sub Topic Title:</label>
-          {isOtherSubTopic ? (
-            <input
-              type="text"
-              value={selectedSubTopic}
-              onChange={(e) => setSelectedSubTopic(e.target.value)}
-              placeholder="Enter sub-topic"
-            />
-          ) : (
-            <select
-              value={selectedSubTopic}
-              onChange={handleSubTopicChange}
-              disabled={!selectedTopic}
-            >
-              <option value="">Select Sub-Topic</option>
-              {selectedTopic && listTopics[selectedTopic]?.map((subTopic) => (
-                <option key={subTopic} value={subTopic}>{subTopic}</option>
-              ))}
-              <option value="other">Other</option>
-            </select>
-          )}
-        </div>
-        <div className="input-group">
-          <label>Problem Statement Title:</label>
-          <input
-            type="text"
-            value={problemStatementTitle}
-            onChange={(e) => setProblemStatementTitle(e.target.value)}
-            placeholder="Enter problem statement title"
-          />
-        </div>
-        <div className="input-group">
-          <label>Problem Statement:</label>
-          <textarea
-            value={problemStatement}
-            onChange={handleProblemStatementChange}
-            style={{ width: '60%', height: '100px' }}
-          />
-        </div>
-      </div>
-      <div className="right-pane">
-        <div className="editor-container">
-          <div className="input-group">
-            <label>Language:</label>
-            <select onChange={handleLanguageChange} value={language}>
-              <option value="javascript">JavaScript</option>
-              <option value="python">Python</option>
-              <option value="c">C</option>
-              <option value="cpp">C++</option>
-              <option value="java">Java</option>
-            </select>
+    <div className='main-container'>
+      <nav className="navbar">
+        <div className="navbar-brand">GEN.ai</div>
+      </nav>
+      <div className="container">
+        <div className="left-pane scrollable">
+          <div className="form-group-grid">
+            <div className="form-group1">
+              <label>Topic Title:</label>
+              <select value={selectedTopic} onChange={handleTopicChange}>
+                <option value="">Select Topic</option>
+                {Object.keys(listTopics).map((topic) => (
+                  <option key={topic} value={topic}>{topic}</option>
+                ))}
+                <option value="other">Other</option>
+              </select>
+              {isOtherTopic && (
+                <input
+                  className='selected'
+                  type="text"
+                  value={selectedTopic}
+                  onChange={(e) => setSelectedTopic(e.target.value)}
+                  placeholder="Enter topic"
+                />
+              )}
+            </div>
+            <div className="form-group1">
+              <label>Sub Topic Title:</label>
+              {isOtherSubTopic ? (
+                <input
+                  type="text"
+                  value={selectedSubTopic}
+                  onChange={(e) => setSelectedSubTopic(e.target.value)}
+                  placeholder="Enter sub-topic"
+                />
+              ) : (
+                <select
+                  value={selectedSubTopic}
+                  onChange={handleSubTopicChange}
+                  disabled={!selectedTopic}
+                >
+                  <option value="">Select Sub-Topic</option>
+                  {selectedTopic && listTopics[selectedTopic]?.map((subTopic) => (
+                    <option key={subTopic} value={subTopic}>{subTopic}</option>
+                  ))}
+                  <option value="other">Other</option>
+                </select>
+              )}
+            </div>
+            <div className="form-group1">
+              <label>Problem Statement Title:</label>
+              <input
+                type="text"
+                value={problemStatementTitle}
+                onChange={(e) => setProblemStatementTitle(e.target.value)}
+                placeholder="Enter problem statement title"
+              />
+            </div>
+            <div className="form-group1">
+              <label>Problem Statement:</label>
+              <textarea
+                value={problemStatement}
+                onChange={handleProblemStatementChange}
+                className='problem-statement-textarea'
+                style={{ width: '450px', height: '320px' }}
+              />
+            </div>
           </div>
-          <Editor
-            height="60vh"
-            width="100%"
-            language={language}
-            value={code[language]}
-            onChange={handleEditorChange}
-            theme="vs-dark"
-          />
         </div>
-        <div className="test-cases-container">
-          <List>
-            <TransitionGroup>
-              {testCases.map((testCase, index) => (
-                <Collapse key={index}>
-                  <ListItem>
-                    <ListItemText
-                      primary={
-                        <div className="test-case-header">
-                          <span>Test Case {index + 1}</span>
-                          <IconButton
-                            edge="end"
-                            aria-label="delete"
-                            title="Delete"
-                            onClick={() => deleteTestCase(index)}
-                            sx={{ color: '#FF0000', marginLeft: '12px' }}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </div>
-                      }
-                      secondary={
-                        <>
-                          <div className="input-group">
-                            <label>Input:</label>
-                            <input
-                              type="text"
-                              value={testCase.input}
-                              onChange={(e) => handleTestCaseChange(index, 'input', e.target.value)}
+        <div className="right-pane">
+          <div className="editor-language-container">
+            <div className="language">
+              <select onChange={handleLanguageChange} value={language}>
+                <option value="javascript">JavaScript</option>
+                <option value="python">Python</option>
+                <option value="c">C</option>
+                <option value="cpp">C++</option>
+                <option value="java">Java</option>
+              </select>
+            </div>
+            <Editor
+              height="40vh"
+              width="100%"
+              language={language}
+              value={code[language]}
+              onChange={handleEditorChange}
+              theme="vs-dark"
+            />
+          </div>
+          <div className="testcases-container" style={{ border: '1px solid #ccc', padding: '16px', borderRadius: '8px' }}>
+            <button className="dropdown-button" onClick={() => setDropdownVisible(!dropdownVisible)}>
+              Test Cases
+            </button>
+            <Collapse in={dropdownVisible}>
+              {dropdownVisible && (
+                <div className="dropdown-content">
+                  <List>
+                    <TransitionGroup>
+                      {testCases.map((testCase, index) => (
+                        <Collapse key={index}>
+                          <ListItem>
+                            <ListItemText
+                              primary={
+                                <div className="test-case-header">
+                                  <span>Test Case {index + 1}</span>
+                                  <IconButton
+                                    edge="end"
+                                    aria-label="expand"
+                                    title="Expand"
+                                    onClick={() => handleExpandClick(index)}
+                                    className={`expand-icon ${expandedTestCase === index ? 'expanded' : ''}`}
+                                  >
+                                    <ExpandMoreIcon />
+                                  </IconButton>
+                                  <IconButton
+                                    edge="end"
+                                    aria-label="delete"
+                                    title="Delete"
+                                    onClick={() => deleteTestCase(index)}
+                                    sx={{ color: '#ff2929', marginLeft: '12px' }}
+                                  >
+                                    <DeleteIcon />
+                                  </IconButton>
+                                </div>
+                              }
+                              secondary={
+                                <Collapse in={expandedTestCase === index} timeout="auto" unmountOnExit>
+                                  <div className="input-group2">
+                                    <div className="input-wrapper">
+                                      <label>Input:</label>
+                                      <input
+                                        type="text"
+                                        value={testCase.input}
+                                        onChange={(e) => handleTestCaseChange(index, 'input', e.target.value)}
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="input-group2">
+                                    <div className="input-wrapper">
+                                      <label>Expected Output:</label>
+                                      <input
+                                        type="text"
+                                        value={testCase.expectedOutput}
+                                        onChange={(e) => handleTestCaseChange(index, 'expectedOutput', e.target.value)}
+                                      />
+                                    </div>
+                                  </div>
+                                </Collapse>
+                              }
                             />
-                          </div>
-                          <div className="input-group">
-                            <label>Expected Output:</label>
-                            <input
-                              type="text"
-                              value={testCase.expectedOutput}
-                              onChange={(e) => handleTestCaseChange(index, 'expectedOutput', e.target.value)}
-                            />
-                          </div>
-                        </>
-                      }
-                    />
-                  </ListItem>
-                </Collapse>
-              ))}
-            </TransitionGroup>
-          </List>
-          <div className="button-container">
-            <Button sx={{ backgroundColor:'#151515', borderRadius:'12px', padding:'12px 36px' }} variant="contained" onClick={addTestCase} className="add-button">
-              + Add Another Test Case
-            </Button>
-            <Button sx={{ backgroundColor:'#151515', marginLeft: '12px', borderRadius:'12px', padding:'12px 36px' }} variant="contained" onClick={handleSubmit} className="submit-button">
-              Submit
-            </Button>
+                          </ListItem>
+                        </Collapse>
+                      ))}
+                    </TransitionGroup>
+                  </List>
+                </div>
+              )}
+            </Collapse>
+             <div className="fixed-buttons">
+              <Button className='add-button' onClick={addTestCase} variant="contained" sx={{ backgroundColor:'#151515', borderRadius:'12px', padding:'8px', width:'20%' }}>
+                Add Test Case
+              </Button>
+              <Button className='submit-button' onClick={handleSubmit} sx={{ backgroundColor:'#151515', borderRadius:'12px', padding:'8px', width:'20%' }} variant="contained">
+                Submit
+              </Button>
+            </div>
           </div>
         </div>
       </div>

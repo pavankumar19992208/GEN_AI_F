@@ -1,11 +1,14 @@
-// MonacoEditorComponent.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Editor } from '@monaco-editor/react';
 
-const MonacoEditorComponent = () => {
+const MonacoEditorComponent = ({ code, setCode, psDetails }) => {
   const [language, setLanguage] = useState('javascript');
-  const [code, setCode] = useState('');
-  const [output, setOutput] = useState('');
+
+  useEffect(() => {
+    if (psDetails) {
+      setCode(psDetails.code[language]);
+    }
+  }, [language, psDetails, setCode]);
 
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
@@ -15,16 +18,12 @@ const MonacoEditorComponent = () => {
     setCode(value);
   };
 
-  const runCode = () => {
-
-  };
-
   return (
-    <div>
+    <div style={{ marginLeft: '20px' }}>
       <select
         onChange={handleLanguageChange}
         value={language}
-        style={{ marginBottom: '10px' }}
+        style={{ marginBottom: '10px', marginTop: '15px' }}
       >
         <option value="javascript">JavaScript</option>
         <option value="python">Python</option>
@@ -33,8 +32,8 @@ const MonacoEditorComponent = () => {
         <option value="java">Java</option>
       </select>
       <Editor
-        height="60vh"
-        width="50%"
+        height="65vh"
+        width="95%"
         language={language}
         value={code}
         onChange={handleEditorChange}
@@ -73,13 +72,6 @@ const MonacoEditorComponent = () => {
           },
         }}
       />
-      <button onClick={runCode} style={{ marginTop: '10px' }}>
-        Run Code
-      </button>
-      <div style={{ marginTop: '10px', whiteSpace: 'pre-wrap' }}>
-        <h3>Output:</h3>
-        <pre>{output}</pre>
-      </div>
     </div>
   );
 };
