@@ -117,7 +117,7 @@ const PsArea = () => {
     })
     .then(response => response.json())
     .then(data => {
-      console.log('Run Code Response:', data[0].error);
+      console.log('Run Code Response:', data);
       if (data[0].error) {
         console.log("entered")
         setSyntaxError(data[0].error); // Set syntax error if present
@@ -222,7 +222,7 @@ const PsArea = () => {
       </Box>
       <Box
         sx={{
-          width: sidebarOpen ? '60vw' : '100%',
+          width: sidebarOpen ? '60vw' : '30vw',
           height: '100%',
           marginLeft: sidebarOpen ? '28.5vw' : '0',
         }}
@@ -232,8 +232,8 @@ const PsArea = () => {
             Run Code
           </Button>
           {syntaxError && (
-            <Box sx={{ color: 'red', margin: '10px' }}>
-             {syntaxError}
+            <Box sx={{ color: 'red', margin: '10px', fontSize: '11.5px' }}>
+              <pre><code>{syntaxError}</code></pre>
             </Box>
           )}
           <TestCases testCases={testCases} results={results} loading={loading} /> {/* Pass loading state to TestCases component */}
