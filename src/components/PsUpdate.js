@@ -95,6 +95,23 @@ const PsUpdate = () => {
     setIsOtherSubTopic(value === 'other');
   };
 
+  const handleImportJson = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const jsonData = JSON.parse(e.target.result);
+        setSelectedTopic(jsonData.topic);
+        setSelectedSubTopic(jsonData.subTopic);
+        setProblemStatementTitle(jsonData.problemStatementTitle);
+        setProblemStatement(jsonData.problemStatement);
+        setCode(jsonData.code);
+        setTestCases(jsonData.testCases);
+      };
+      reader.readAsText(file);
+    }
+  };
+
   return (
     <div style={{ display: 'flex', width: '100%', height: '100vh' }}>
       <div style={{ width: '50%', padding: '10px', overflowY: 'auto' }}>
@@ -158,6 +175,10 @@ const PsUpdate = () => {
             onChange={handleProblemStatementChange}
             style={{ width: '100%', height: '100px' }}
           />
+        </div>
+        <div>
+          <label>Import JSON File:</label>
+          <input type="file" accept=".json" onChange={handleImportJson} />
         </div>
       </div>
       <div style={{ width: '50%', padding: '10px', overflowY: 'auto' }}>

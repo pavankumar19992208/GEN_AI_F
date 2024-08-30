@@ -1,17 +1,18 @@
-// App.js
 import React from 'react';
-import MonacoEditorComponent from './components/MonacoEditorComponent';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PsUpdate from './components/PsUpdate';
 import PsArea from './components/PsArea/PsArea';
 
 const App = () => {
   return (
-    <div className="App">
-      {/* <h1>Monaco Editor with Multiple Languages</h1> */}
-       {/* <MonacoEditorComponent /> */}
-      {/* <PsUpdate /> */}
-      <PsArea/>
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/update" element={<PsUpdate />} />
+          <Route path="/" element={<PsArea />} />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 

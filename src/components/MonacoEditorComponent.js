@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Editor } from '@monaco-editor/react';
 
-const MonacoEditorComponent = ({ code, setCode, psDetails }) => {
-  const [language, setLanguage] = useState('javascript');
-
+const MonacoEditorComponent = ({ code, setCode, psDetails, selectedLanguage, setSelectedLanguage }) => {
   useEffect(() => {
     if (psDetails) {
-      setCode(psDetails.code[language]);
+      setCode(psDetails.code[selectedLanguage]);
     }
-  }, [language, psDetails, setCode]);
+  }, [selectedLanguage, psDetails, setCode]);
 
   const handleLanguageChange = (event) => {
-    setLanguage(event.target.value);
+    setSelectedLanguage(event.target.value);
   };
 
   const handleEditorChange = (value) => {
@@ -22,7 +20,7 @@ const MonacoEditorComponent = ({ code, setCode, psDetails }) => {
     <div style={{ marginLeft: '20px' }}>
       <select
         onChange={handleLanguageChange}
-        value={language}
+        value={selectedLanguage}
         style={{ marginBottom: '10px', marginTop: '15px' }}
       >
         <option value="javascript">JavaScript</option>
@@ -34,7 +32,7 @@ const MonacoEditorComponent = ({ code, setCode, psDetails }) => {
       <Editor
         height="65vh"
         width="95%"
-        language={language}
+        language={selectedLanguage}
         value={code}
         onChange={handleEditorChange}
         theme="vs-dark"
