@@ -146,6 +146,7 @@ const PsArea = () => {
         height: '80vh',
       }}
     >
+      
       {sidebarOpen && (
         <Box
           sx={{
