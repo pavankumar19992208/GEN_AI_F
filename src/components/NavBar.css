@@ -1,14 +1,16 @@
 .appBar {
-  background-color: #14305A;
-  height: 8vh;
+  background-color: #14305a00;
+  height: 10vh;
   margin: 10px;
-  border-radius: 10px;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-top: 15px;
+  /* border-radius: 30px; */
+  margin-left: 50px;
+  margin-right: 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
+  border-bottom: 2px solid #14305a70; /* Add this line */
 }
 
 .toolbar {
@@ -19,25 +21,34 @@
 }
 
 .logo {
-  height: 7vh;
+  height: 9vh;
   width: auto;
   margin-right: auto;
-  
+  margin-left: 40px;
 }
 
 .loginButton {
   margin-left: auto;
-  color: white;
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 20px;
+  
 }
 
 .iconButton {
-  color: white;
+  color: #14305A;
   background: none;
   border: none;
   cursor: pointer;
   font-size: 24px;
 }
+
+.icon1 {
+  font-size: 36px; /* Increase the icon size */
+  margin-left: 0; /* Add space between login button and profile icon */
+}
+.icon {
+    font-size: 36px; /* Increase the icon size */
+    margin-left: 30px; /* Add space between login button and profile icon */
+  }
