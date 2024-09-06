@@ -23,6 +23,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { makeStyles } from '@mui/material/styles';
 import "./PsUpdate.css"; // Import the CSS file
+import NavBar from './NavBar'; // Import the Navbar component
+import styles from './PsUpdate.module.css'; // Import the CSS module
 
 const PsUpdate = () => {
   const [language, setLanguage] = useState("javascript");
@@ -46,7 +48,7 @@ const PsUpdate = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [expandedTestCase, setExpandedTestCase] = useState(null);
   const [isTestCasesExpanded, setIsTestCasesExpanded] = useState(false);
-  const [editorHeight, setEditorHeight] = useState(72); // Initial height in vh
+  const [editorHeight, setEditorHeight] = useState(67); // Initial height in vh
   const [isDragging, setIsDragging] = useState(false);
   const [isHorizontalDragging, setIsHorizontalDragging] = useState(false);
   const [leftPaneWidth, setLeftPaneWidth] = useState(40); // Initial width in %
@@ -197,7 +199,7 @@ const PsUpdate = () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
     }
-
+  
     if (isHorizontalDragging) {
       window.addEventListener("mousemove", handleHorizontalMouseMove);
       window.addEventListener("mouseup", handleHorizontalMouseUp);
@@ -205,22 +207,19 @@ const PsUpdate = () => {
       window.removeEventListener("mousemove", handleHorizontalMouseMove);
       window.removeEventListener("mouseup", handleHorizontalMouseUp);
     }
-
+  
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
       window.removeEventListener("mousemove", handleHorizontalMouseMove);
       window.removeEventListener("mouseup", handleHorizontalMouseUp);
     };
-  }, [isDragging, isHorizontalDragging]);
-
+  }, [isDragging, isHorizontalDragging, handleMouseMove, handleMouseUp, handleHorizontalMouseMove, handleHorizontalMouseUp]);
   
 
   return (
     <div className="main-container">
-      <nav className="navbar">
-        <div className="navbar-brand">GEN.ai</div>
-      </nav>
+      <NavBar className={styles.navbarInPsUpdate} /> {/* Use the Navbar component here */}
       <div className="container">
         <div className="left-pane" style={{ width: `${leftPaneWidth}%` }}>
           <div className="form-container">
