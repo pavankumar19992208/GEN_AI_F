@@ -1,8 +1,8 @@
 // App.js
 import React from "react";
-import MonacoEditorComponent from "./components/MonacoEditorComponent";
+// import MonacoEditorComponent from "./components/MonacoEditorComponent";
 import PsUpdate from "./components/PsUpdate";
-import PsArea from "./components/PsArea/PsArea";
+// import PsArea from "./components/PsArea/PsArea";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Validation from "./components/LoginValidation";
