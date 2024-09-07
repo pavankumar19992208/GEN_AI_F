@@ -276,12 +276,12 @@ const PsUpdate = () => {
             </div>
             <div className="form-group1" >
               <label >Import JSON File:</label>
-              <input style={{ height: "34px" }} type="file" accept=".json" onChange={handleImportJson} />
+              <input style={{ height: "31px" }} type="file" accept=".json" onChange={handleImportJson} />
             </div>
             <div className="form-group1">
               <label>Problem Statement:</label>
               <textarea
-                value={problemStatement} onChange={handleProblemStatementChange} className="problem-statement-textarea" style={{ height: "54vh" }}
+                value={problemStatement} onChange={handleProblemStatementChange} className="problem-statement-textarea" style={{ height: "50vh" }}
               />
             </div>
           </div>
@@ -292,7 +292,7 @@ const PsUpdate = () => {
         ></div>
         <div className="right-pane">
           <div className="editor-language-container" style={{ height: `${editorHeight}vh`, marginBottom: "8px" }}>
-            <div className="language">
+            <div className="language" style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <select onChange={handleLanguageChange} value={language}>
                 <option value="javascript">JavaScript</option>
                 <option value="python">Python</option>
@@ -300,6 +300,37 @@ const PsUpdate = () => {
                 <option value="cpp">C++</option>
                 <option value="java">Java</option>
               </select>
+              <Button
+                variant="contained"
+                sx={{
+                 marginLeft:"12px",
+                  marginRight: "16px",
+                  backgroundColor: "#14305a27",
+                  color:'#000',
+                  height:'36px',
+                  padding:'6px 20px 6px 30px ',
+                  borderRadius:'12px',
+                  '&:hover': {
+                    backgroundColor: "#14305a",
+                    color:'#fff',
+                  },
+                  position: 'relative',
+                }}
+              >
+                <span
+                  style={{
+                    position: 'absolute',
+                    left: '14px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '8px',
+                    height: '8px',
+                    backgroundColor: 'red',
+                    borderRadius: '50%',
+                  }}
+                ></span>
+                Code
+              </Button>
             </div>
            
             <Editor
@@ -328,7 +359,7 @@ const PsUpdate = () => {
               border: "1px solid #ccc",
               padding: "8px",
               borderRadius: "8px",
-              height: `calc(100vh - ${editorHeight}vh - 64px)`, // Adjust height based on editor height
+              height: `calc(100vh - ${editorHeight}vh - 30px)`, // Adjust height based on editor height
               overflow: "auto",
             }}
           >

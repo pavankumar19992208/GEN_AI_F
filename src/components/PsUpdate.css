@@ -1,3 +1,4 @@
+/* Base styles (for larger screens) */
 .main-container {
   background-color: #14305a;
   display: flex;
@@ -5,24 +6,8 @@
   height: 100vh;
 }
 
-.navbar {
-  display: flex;
-  align-items: center;
-  padding: 14px 20px;
-  background-color: #14305a;
-  box-shadow: 0 4px 6px -1px rgba(128, 128, 128, 0.1), 0 2px 4px -1px rgba(128, 128, 128, 0.06);
-}
-
-.navbar-brand {
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
-  font-style: normal;
-  font-size: 28px;
-  color: #fff;
-}
-
 .container {
-  flex:1;
+  flex: 1;
   display: flex;
   width: 100%;
   height: calc(100vh - 80px); /* Adjust for navbar height */
@@ -32,27 +17,82 @@
 .left-pane {
   width: 40%;
   overflow-y: auto;
-  height: 100%;
-  padding: 10px 20px 0px;
+  height: 83.3vh;
+  padding: 10px 20px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-background-color: #f8feff;
+  background-color: #f5f9ff;
   overflow: hidden; /* Prevent scrolling */
 }
 
 .right-pane {
-  background-color: #f8feff;
+  background-color: #f5f9ff;
   width: 60%;
   padding: 10px;
   display: flex;
   flex-direction: column;
   flex: 1;
   box-sizing: border-box;
-  height: 91.4vh; /* Ensure it fits the screen height */
+  height: 86.3vh; /* Ensure it fits the screen height */
   overflow: hidden; /* Prevent scrolling */
 }
 
+/* Media Queries for responsiveness */
+
+/* Mobile devices (portrait and landscape) */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left-pane, .right-pane {
+    width: 100%;
+    height: auto;
+  }
+
+  .left-pane {
+    padding: 10px;
+  }
+
+  .right-pane {
+    padding: 10px;
+  }
+
+  .form-container {
+    height: auto;
+  }
+
+  .form-group1 {
+    flex: 1 1 100%; /* Full width on mobile */
+  }
+
+  .language select {
+    width: 100%;
+  }
+}
+
+/* Tablets and small desktops */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .left-pane {
+    width: 50%;
+  }
+
+  .right-pane {
+    width: 50%;
+  }
+
+  .form-group1 {
+    flex: 1 1 calc(50% - 10px); /* 2x2 grid */
+  }
+
+  .language select {
+    width: 50%;
+  }
+}
+
+/* Additional styles for other components */
 .divider-horizontal {
   width: 5px;
   background-color: #ccc;
@@ -67,7 +107,8 @@ background-color: #f8feff;
   flex-wrap: wrap;
   gap: 8px;
   width: 100%;
-  height: 86vh;/**/}
+  height: 81.2vh;
+}
 
 .form-group1 .selected {
   margin-top: 12px;
@@ -88,9 +129,6 @@ background-color: #f8feff;
   flex-direction: column;
   overflow-y: auto;
   margin: 0px 0px;
-
-
-
 }
 
 .testcases-header {
@@ -99,8 +137,7 @@ background-color: #f8feff;
   justify-content: space-between;
   position: sticky;
   top: -8px;
-  height: 32px;
-background-color: #fff;
+  height: 28px;
   z-index: 1;
   padding: 8px;
   border-bottom: 1px solid #ccc;
@@ -114,10 +151,7 @@ background-color: #fff;
 .testcase {
   margin-bottom: 10px;
   position: relative;
-
 }
-
-
 
 .form-group-grid {
   display: flex;
@@ -183,7 +217,7 @@ background-color: #fff;
 }
 
 .language select {
-  background-color: #14305a10;
+  background-color: #14305a27;
   width: 20%;
   padding: 10px;
   border: none;
@@ -191,8 +225,6 @@ background-color: #fff;
   border-radius: 12px;
   margin-bottom: 8px;
 }
-
-
 
 .editor-language-container {
   border: 1px solid #ccc;
@@ -203,11 +235,11 @@ background-color: #fff;
   overflow: hidden;
 }
 
-
 .editor {
   height: 90%;
   width: 100%;
 }
+
 .dropdown-button {
   background-color: #14305a;
   color: rgb(255, 255, 255);
@@ -217,17 +249,14 @@ background-color: #fff;
   cursor: pointer;
 }
 
-.dropdown-button:hover{
+.dropdown-button:hover {
   color: #000000;
   background-color: #14305a27;
 }
 
-.add-icon{
- 
+.add-icon {
   cursor: pointer;
 }
-
-
 
 .fixed-buttons {
   position: absolute;
@@ -235,7 +264,6 @@ background-color: #fff;
   right: 34px;
   display: flex;
   gap: 8px;
-  
 }
 
 .fixed-buttons .add-button,
@@ -246,12 +274,12 @@ background-color: #fff;
   background-color: #14305a;
   border-radius: 12px;
   z-index: 1000;
-
 }
 
-.fixed-buttons .add-button:hover, .fixed-buttons .submit-button:hover{
-  background-color: #232323;
-
+.fixed-buttons .add-button:hover,
+.fixed-buttons .submit-button:hover {
+  background-color: #14305a27;
+  color: #000000;
 }
 
 .dropdown-content {

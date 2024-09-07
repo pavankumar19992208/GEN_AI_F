@@ -17,14 +17,14 @@ const NavBar = () => {
   return (
     <div className="appBar">
       <div className="toolbar">
-        <MenuIcon className="icon1" fontSize="large" aria-label="menu" />
+        <MenuIcon className="icon1" fontSize="large" aria-label="menu" sx={{ color: '#fff' }} />
         <img
           src={img1} // Replace with your logo path
           alt="Logo"
           className="logo"
         />
-        <Button variant="contained" onClick={toggleLogin}>Login</Button> {/* Use the Button component */}
-        <AccountCircle className="icon" fontSize="large" />
+        <Button variant="contained" onClick={toggleLogin} sx={{ color: '#000', backgroundColor:'#fff' }}>Login</Button> {/* Use the Button component */}
+        <AccountCircle className="icon" fontSize="large" sx={{ color: '#fff' }}/>
       </div>
       <Modal show={showLogin} onClose={toggleLogin}>
       <Login onClose={toggleLogin} />
