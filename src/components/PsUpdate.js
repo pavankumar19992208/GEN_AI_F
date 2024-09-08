@@ -3,30 +3,32 @@ import { Editor } from "@monaco-editor/react";
 import Button from "@mui/material/Button";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import DeleteIcon from "@mui/icons-material/Delete";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Chip from '@mui/material/Chip';
+import Paper from '@mui/material/Paper';
 import AddIcon from "@mui/icons-material/Add";
-import { TransitionGroup } from "react-transition-group";
-import Avatar from '@mui/material/Avatar';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { makeStyles } from '@mui/material/styles';
+import CloseIcon from "@mui/icons-material/Close"; // Import Close icon
+import TagFacesIcon from '@mui/icons-material/TagFaces';
+import { styled } from '@mui/material/styles';
 import "./PsUpdate.css"; // Import the CSS file
 import NavBar from './NavBar'; // Import the Navbar component
 import styles from './PsUpdate.module.css'; // Import the CSS module
 
-const PsUpdate = () => {
+const ListItem = styled('li')(({ theme }) => ({
+  margin: theme.spacing(0.5),
+}));
+
+const PsUpdate = (props) => {
+
+  // Assuming `props` contains the object with `input`
+  const { someObject } = props;
+
+  // Add a check to ensure `someObject` is defined before accessing `input`
+  if (someObject && someObject.input) {
+    // Safe to access `someObject.input`
+    console.log(someObject.input);
+  } else {
+    console.error("someObject or someObject.input is undefined");
+  }
   const [language, setLanguage] = useState("javascript");
   const [code, setCode] = useState({
     javascript: "",
@@ -41,7 +43,7 @@ const PsUpdate = () => {
   const [problemStatementTitle, setProblemStatementTitle] = useState("");
   const [problemStatement, setProblemStatement] = useState("");
   const [testCases, setTestCases] = useState([
-    { input: "", expectedOutput: "" },
+    { key: 0, input: "", expectedOutput: "" },
   ]);
   const [isOtherTopic, setIsOtherTopic] = useState(false);
   const [isOtherSubTopic, setIsOtherSubTopic] = useState(false);
@@ -80,7 +82,7 @@ const PsUpdate = () => {
   };
 
   const addTestCase = () => {
-    setTestCases([...testCases, { input: "", expectedOutput: "" }]);
+    setTestCases([...testCases, { key: testCases.length, input: "", expectedOutput: "" }]);
   };
 
   const handleExpandClick = (index) => {
@@ -93,9 +95,8 @@ const PsUpdate = () => {
     setTestCases(newTestCases);
   };
 
-  const deleteTestCase = (index) => {
-    const newTestCases = testCases.filter((_, i) => i !== index);
-    setTestCases(newTestCases);
+  const deleteTestCase = (chipToDelete) => () => {
+    setTestCases((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
   };
 
   const handleSubmit = async () => {
@@ -155,7 +156,7 @@ const PsUpdate = () => {
         setProblemStatementTitle(jsonData.problemStatementTitle);
         setProblemStatement(jsonData.problemStatement);
         setCode(jsonData.code);
-        setTestCases(jsonData.testCases);
+        setTestCases(jsonData.testCases.map((testCase, index) => ({ key: index, ...testCase })));
       };
       reader.readAsText(file);
     }
@@ -216,6 +217,13 @@ const PsUpdate = () => {
     };
   }, [isDragging, isHorizontalDragging, handleMouseMove, handleMouseUp, handleHorizontalMouseMove, handleHorizontalMouseUp]);
   
+
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+    if (dropdownVisible) {
+      setExpandedTestCase(null);
+    }
+  };
 
   return (
     <div className="main-container">
@@ -290,7 +298,7 @@ const PsUpdate = () => {
           className="divider-horizontal"
           onMouseDown={handleHorizontalMouseDown}
         ></div>
-        <div className="right-pane">
+        <div className="right-pane" style={{ width: "60%" }}>
           <div className="editor-language-container" style={{ height: `${editorHeight}vh`, marginBottom: "8px" }}>
             <div className="language" style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <select onChange={handleLanguageChange} value={language}>
@@ -361,13 +369,14 @@ const PsUpdate = () => {
               borderRadius: "8px",
               height: `calc(100vh - ${editorHeight}vh - 30px)`, // Adjust height based on editor height
               overflow: "auto",
+              backgroundColor: "#f9f9f9", // Set background color
             }}
           >
             <div className="testcases-header">
               <div className="testcases-header-buttons">
                 <button
                   className="dropdown-button"
-                  onClick={() => setDropdownVisible(!dropdownVisible)}
+                  onClick={toggleDropdown}
                 >
                   Test Cases
                 </button>
@@ -397,87 +406,77 @@ const PsUpdate = () => {
             <Collapse in={dropdownVisible}>
               {dropdownVisible && (
                 <div className="dropdown-content">
-                  <List>
-                    <TransitionGroup>
-                      {testCases.map((testCase, index) => (
-                        <Collapse key={index}>
-                          <ListItem>
-                            <ListItemText
-                              primary={
-                                <div className="test-case-header">
-                                  <span>Test Case {index + 1}</span>
-                                  <IconButton
-                                    edge="end"
-                                    aria-label="expand"
-                                    title="Expand"
-                                    onClick={() => handleExpandClick(index)}
-                                    className={`expand-icon ${expandedTestCase === index ? "expanded" : ""}`}
-                                  >
-                                    <ExpandMoreIcon />
-                                  </IconButton>
-                                  <IconButton
-                                    edge="end"
-                                    aria-label="delete"
-                                    title="Delete"
-                                    onClick={() => deleteTestCase(index)}
-                                    sx={{
-                                      color: "#ff2929",
-                                      marginLeft: "12px",
-                                    }}
-                                  >
-                                    <DeleteIcon />
-                                  </IconButton>
-                                </div>
-                              }
-                              secondary={
-                                <Collapse
-                                  in={expandedTestCase === index}
-                                  timeout="auto"
-                                  unmountOnExit
-                                >
-                                  <div className="input-group2">
-                                    <div className="input-wrapper">
-                                      <label>Input:</label>
-                                      <input
-                                        type="text"
-                                        value={testCase.input}
-                                        onChange={(e) =>
-                                          handleTestCaseChange(
-                                            index,
-                                            "input",
-                                            e.target.value
-                                          )
-                                        }
-                                      />
-                                    </div>
-                                  </div>
-                                  <div className="input-group2">
-                                    <div className="input-wrapper">
-                                      <label>Expected Output:</label>
-                                      <input
-                                        type="text"
-                                        value={testCase.expectedOutput}
-                                        onChange={(e) =>
-                                          handleTestCaseChange(
-                                            index,
-                                            "expectedOutput",
-                                            e.target.value
-                                          )
-                                        }
-                                      />
-                                    </div>
-                                  </div>
-                                </Collapse>
-                              }
-                            />
-                          </ListItem>
-                        </Collapse>
-                      ))}
-                    </TransitionGroup>
-                  </List>
+                  <Paper
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'left',
+                      flexWrap: 'wrap',
+                      listStyle: 'none',
+                      p: 0.5,
+                      m: 0,
+                      boxShadow:'none',
+                      backgroundColor: '#e0f7fa00', // Set background color to desired color
+                    }}
+                    component="ul"
+                  >
+                    {testCases.map((data, index) => {
+                      let icon;
+
+                      if (data.label === 'React') {
+                        icon = <TagFacesIcon />;
+                      }
+
+                      return (
+                        <ListItem key={data.key}>
+                          <Chip
+                            icon={icon}
+                            label={`Test Case ${index + 1}`}
+                            onDelete={deleteTestCase(data)}
+                            onClick={() => handleExpandClick(index)}
+                          />
+                        </ListItem>
+                      );
+                    })}
+                  </Paper>
                 </div>
               )}
             </Collapse>
+            {expandedTestCase !== null && (
+              <div className="input-fields">
+                <div className="input-group2">
+                  <div className="input-wrapper">
+                    <label>Input:</label>
+                    <input
+                      type="text"
+                      value={testCases[expandedTestCase].input}
+                      onChange={(e) =>
+                        handleTestCaseChange(
+                          expandedTestCase,
+                          "input",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="input-group2">
+                  <div className="input-wrapper">
+                    <label>Expected Output:</label>
+                    <input
+                      type="text"
+                      value={testCases[expandedTestCase].expectedOutput}
+                      onChange={(e) =>
+                        handleTestCaseChange(
+                          expandedTestCase,
+                          "expectedOutput",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
             <div className="fixed-buttons">
               <Button
                 className="submit-button"

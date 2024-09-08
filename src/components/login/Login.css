@@ -65,7 +65,7 @@
 
 .create-account-button {
   display: block;
-  width: 91%;
+  width: 100%;
   padding: 10px;
   text-align: center;
   background-color: #f8f9fa;
@@ -78,4 +78,41 @@
 
 .create-account-button:hover {
   background-color: #e2e6ea;
+}
+
+
+
+/* Login.css */
+@keyframes flipOutY {
+  0% {
+    transform: perspective(400px) rotateY(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: perspective(400px) rotateY(90deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flipInY {
+  0% {
+    transform: perspective(400px) rotateY(-90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: perspective(400px) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+.flip-out {
+  animation: flipOutY 0.6s both;
+}
+
+.flip-in {
+  animation: flipInY 0.6s both;
+}
+
+.hidden {
+  display: none;
 }

@@ -4,9 +4,8 @@ import PsUpdate from "./components/PsUpdate";
 import PsArea from './components/PsArea/PsArea';
 import Welcome from './components/Welcome';
 import DeveloperDashboard from './components/DeveloperDashboard/DeveloperDashboard';
-
 import './App.css';
-
+import LandingPage from "./components/LandingPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 const App = () => {
@@ -19,6 +18,7 @@ const App = () => {
           <Route path="/Area" element={<PsArea />} />
           <Route path="/" element={<Welcome/>} />
           <Route path="/dashboard" element={<DeveloperDashboard/>} />
+          <Route path="/landingpage" element={<LandingPage/>} />
         </Routes>
       </div>
     </Router>

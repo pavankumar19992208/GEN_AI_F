@@ -11,6 +11,7 @@ function Login({ onClose }) {
 
   const [errors, setErrors] = useState({});
   const [isSignup, setIsSignup] = useState(false); // State to manage whether to show signup form
+  const [animationClass, setAnimationClass] = useState(''); // State to manage animation class
 
   const handleInput = (event) => {
     setValues((prev) => ({ ...prev, [event.target.name]: event.target.value }));
@@ -22,12 +23,16 @@ function Login({ onClose }) {
   };
 
   const handleCreateAccountClick = () => {
-    setIsSignup(true); // Show the signup form
+    setAnimationClass('flip-out'); // Apply flip-out animation
+    setTimeout(() => {
+      setIsSignup(true); // Show the signup form
+      setAnimationClass('flip-in'); // Apply flip-in animation
+    }, 180); // Duration of the flip-out animation
   };
 
   return (
     <div className='login-container'>
-      <div className='login-box'>
+      <div className={`login-box ${animationClass}`}>
         {isSignup ? (
           <Signup onClose={onClose} />
         ) : (

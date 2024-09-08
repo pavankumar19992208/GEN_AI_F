@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button'; // Import the Button component
-import img1 from '../images/Gen_logo.png';
+import img1 from '../images/logo-white.png';
 import './NavBar.css'; // Import the CSS file
 import Login from '../components/login/Login'; // Import the Login component
 import Modal from './common/Modal';

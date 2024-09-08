@@ -127,8 +127,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
   margin: 0px 0px;
+
 }
 
 .testcases-header {
@@ -136,11 +136,16 @@
   align-items: center;
   justify-content: space-between;
   position: sticky;
-  top: -8px;
-  height: 28px;
+  /* height: 28px; */
   z-index: 1;
   padding: 8px;
   border-bottom: 1px solid #ccc;
+  width: 98%;
+  color: #000;
+  cursor: pointer;
+  background-color: #e0f7fa00;
+
+
 }
 
 .testcases-header-buttons {
@@ -148,9 +153,37 @@
   align-items: center;
 }
 
+.test-case-content {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+
+}
+
+.delete-icon {
+  display: none;
+}
+
+.test-case-content:hover .delete-icon {
+  display: block;
+ 
+ 
+}
+
+
 .testcase {
   margin-bottom: 10px;
   position: relative;
+
+}
+
+.test-case-header{
+  background-color: #14305a50;
+  border-radius: 6px;
+  padding: 6px;
+}
+.input-group2 {
+  margin-bottom: 8px;
 }
 
 .form-group-grid {
@@ -198,7 +231,8 @@
 .input-wrapper {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
+  margin-top: 12px;
 }
 
 .input-wrapper label {
@@ -283,7 +317,8 @@
 }
 
 .dropdown-content {
-  margin-top: 16px;
+  margin-top: 0px;
+
 }
 
 .expand-icon.expanded {
