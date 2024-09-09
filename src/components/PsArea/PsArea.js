@@ -15,6 +15,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Button from '@mui/material/Button';
 import TestCases from './TestCases'; // Import the new component
+import { green, lightBlue } from '@mui/material/colors';
 
 const PsArea = () => {
   const [code, setCode] = useState('');
@@ -159,6 +160,8 @@ const PsArea = () => {
             '-ms-overflow-style': 'none',  // IE and Edge
             'scrollbar-width': 'none',  // Firefox
             position: 'relative', // Ensure the close button is positioned relative to the sidebar
+            backgroundColor: 'darkcyan',
+            boxShadow: '4px 4px 5px 2px grey'
           }}
         >
           <IconButton
@@ -171,12 +174,15 @@ const PsArea = () => {
               height: '50px',
               margin: '10px',
               zIndex: 1, // Ensure the button is above other elements
+              color: '#D2042D'
             }}
             onClick={() => setSidebarOpen(!sidebarOpen)}
+            onMouseOver={({target})=>target.style.backgroundColor='lawngreen'}
+            onMouseOut={({target})=>target.style.backgroundColor='transparent'}
           >
             <ChevronLeftIcon />
           </IconButton>
-          <Paper elevation={3} sx={{ height: '100%', padding: '10px', marginTop: '70px' }}>
+          <Paper elevation={3} sx={{ height: '100%', padding: '10px', marginTop: '70px', color: 'darkred'}}>
             {psDetails ? (
               <div>
                 <h2>{psDetails.title}</h2>
@@ -202,9 +208,12 @@ const PsArea = () => {
             top: '7%',
             transform: 'translateY(-50%)',
             width: '50px',
-            height: '100%',
+            height: '50px',
+            color: '#D2042D'
           }}
           onClick={() => setSidebarOpen(!sidebarOpen)}
+          onMouseOver={({target})=>target.style.backgroundColor='lawngreen'}
+          onMouseOut={({target})=>target.style.backgroundColor='transparent'}
         >
           <ChevronRightIcon />
         </IconButton>
@@ -216,7 +225,7 @@ const PsArea = () => {
           marginLeft: sidebarOpen ? '0' : '40px',
         }}
       >
-        <Paper elevation={3} sx={{ height: '100%',marginLeft: sidebarOpen ? '0' : '20px' }}>
+        <Paper elevation={24} sx={{ height: '100%',marginLeft: sidebarOpen ? '0' : '20px',backgroundColor: '#132855', boxShadow: '50', perspective:'100px', boxShadow: '5px 5px 10px 2px grey'}}>
           <MonacoEditorComponent code={code} setCode={setCode} psDetails={psDetails} selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
         </Paper>
       </Box>
@@ -225,9 +234,10 @@ const PsArea = () => {
           width: sidebarOpen ? '60vw' : '30vw',
           height: '100%',
           marginLeft: sidebarOpen ? '28.5vw' : '0',
+          boxShadow: 20,
         }}
       >
-        <Paper elevation={3} sx={{ height: '100%' }}>
+        <Paper elevation={24} sx={{ height: '100%', backgroundColor: 'transparent', boxShadow: '100', perspective: '200px'}}>
           <Button variant="contained" color="primary" onClick={runCode} sx={{ margin: '10px' }}>
             Run Code
           </Button>
