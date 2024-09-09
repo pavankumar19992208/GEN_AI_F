@@ -5,6 +5,7 @@
   justify-content: center;
   height: 80vh;
   text-align: center;
+  margin-top: 5vh;
 }
 
 .welcome-image {
@@ -20,8 +21,14 @@
   margin-top: 20px;
 }
 
-.loginButton {
-  color: red;
+.loginButton, .registerButton {
+  color: red; /* Apply the same color to both SIGN IN and REGISTER */
   cursor: pointer;
   font-weight: bold;
+}
+
+.or-text {
+  font-size: 1.2em;
+  color: #000; /* Default color for "or" text */
+  font-family: 'Courier New', Courier, monospace; /* Make it look like code */
 }

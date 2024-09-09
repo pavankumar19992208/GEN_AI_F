@@ -15,6 +15,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Button from '@mui/material/Button';
 import TestCases from './TestCases'; // Import the new component
+import ChatBot from '../Gen_ai/Bot'; // Import the ChatBot component
 
 const PsArea = () => {
   const [code, setCode] = useState('');
@@ -99,6 +100,7 @@ const PsArea = () => {
   };
 
   const runCode = () => {
+    console.log('Run Code button clicked'); // Add log to check if function is called
     setLoading(true); // Set loading to true when run code is clicked
     const payload = {
       code,
@@ -239,6 +241,9 @@ const PsArea = () => {
           )}
           <TestCases testCases={testCases} results={results} loading={loading} /> {/* Pass loading state to TestCases component */}
         </Paper>
+      
+        <ChatBot code={code} selectedLanguage={selectedLanguage} testCases={testCases} results={results} psDetails={psDetails} /> {/* Add the ChatBot component here */}
+
       </Box>
     </Box>
   );
