@@ -17,19 +17,17 @@
 .left-pane {
   width: 40%;
   overflow-y: auto;
-  height: 83.3vh;
-  padding: 10px 20px 10px;
+  height: 100%;
+  padding: 0px 15px 0px 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f5f9ff;
   overflow: hidden; /* Prevent scrolling */
 }
 
 .right-pane {
-  background-color: #f5f9ff;
   width: 60%;
-  padding: 10px;
+  padding: 0px 6px 8px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -71,10 +69,12 @@
   .language select {
     width: 100%;
   }
+
+  
 }
 
 /* Tablets and small desktops */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1055px) {
   .left-pane {
     width: 50%;
   }
@@ -90,24 +90,37 @@
   .language select {
     width: 50%;
   }
+
+  .submit-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    bottom: -12px;
+  }
+
+  
 }
+
 
 /* Additional styles for other components */
 .divider-horizontal {
-  width: 5px;
+  width: 4px;
   background-color: #ccc;
   cursor: col-resize;
+  height: 99%;
 }
 
 .form-container {
   border: 1px solid #ccc; /* Add border to the form container */
-  padding: 8px;
+  padding: 12px 8px;
   border-radius: 8px;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   width: 100%;
-  height: 81.2vh;
+  height:81.5vh;
+  background-color: #f5f9ff;
+
 }
 
 .form-group1 .selected {
@@ -216,9 +229,9 @@
 }
 
 .form-group1 textarea {
-  background-color: #14305a10;
+  background-color: #eaf2ff;
   width: 100%;
-  padding: 8px;
+  padding: 44px 8px;
   border: solid 0.5px #14305a20;
   box-sizing: border-box;
   border-radius: 8px;
@@ -256,11 +269,13 @@
   padding: 10px;
   border: none;
   box-sizing: border-box;
-  border-radius: 12px;
+  border-radius: 8px;
   margin-bottom: 8px;
 }
 
 .editor-language-container {
+  background-color: #f5f9ff;
+
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 8px;
@@ -279,7 +294,7 @@
   color: rgb(255, 255, 255);
   border: none;
   padding: 8px;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
@@ -294,23 +309,22 @@
 
 .fixed-buttons {
   position: absolute;
-  bottom: 38px;
+  bottom: 7vh;
   right: 34px;
   display: flex;
   gap: 8px;
 }
 
-.fixed-buttons .add-button,
 .fixed-buttons .submit-button {
   width: 150px; /* Change the width as needed */
   height: 6px; /* Change the height as needed */
   padding: 20px;
   background-color: #14305a;
-  border-radius: 12px;
+  border-radius: 8px;
   z-index: 1000;
 }
 
-.fixed-buttons .add-button:hover,
+
 .fixed-buttons .submit-button:hover {
   background-color: #14305a27;
   color: #000000;

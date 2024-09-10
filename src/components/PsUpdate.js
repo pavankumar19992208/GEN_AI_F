@@ -8,10 +8,14 @@ import Paper from '@mui/material/Paper';
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close"; // Import Close icon
 import TagFacesIcon from '@mui/icons-material/TagFaces';
+import FullscreenIcon from '@mui/icons-material/Fullscreen'; // Import Fullscreen icon
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit'; // Import FullscreenExit icon
 import { styled } from '@mui/material/styles';
 import "./PsUpdate.css"; // Import the CSS file
 import NavBar from './NavBar'; // Import the Navbar component
 import styles from './PsUpdate.module.css'; // Import the CSS module
+
+import { Splitter, SplitterPanel } from 'primereact/splitter';
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
@@ -54,6 +58,7 @@ const PsUpdate = (props) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isHorizontalDragging, setIsHorizontalDragging] = useState(false);
   const [leftPaneWidth, setLeftPaneWidth] = useState(40); // Initial width in %
+  const [isFullscreen, setIsFullscreen] = useState(false); // State for fullscreen mode
 
   useEffect(() => {
     const fetchData = async () => {
@@ -217,12 +222,15 @@ const PsUpdate = (props) => {
     };
   }, [isDragging, isHorizontalDragging, handleMouseMove, handleMouseUp, handleHorizontalMouseMove, handleHorizontalMouseUp]);
   
-
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
     if (dropdownVisible) {
       setExpandedTestCase(null);
     }
+  };
+
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
   };
 
   return (
@@ -288,9 +296,32 @@ const PsUpdate = (props) => {
             </div>
             <div className="form-group1">
               <label>Problem Statement:</label>
-              <textarea
-                value={problemStatement} onChange={handleProblemStatementChange} className="problem-statement-textarea" style={{ height: "50vh" }}
-              />
+              <div style={{ position: 'relative' }}>
+                <textarea
+                  value={problemStatement}
+                  onChange={handleProblemStatementChange}
+                  className="problem-statement-textarea"
+                  style={{
+                    height: isFullscreen ? "85vh" : "50vh",
+                    width: isFullscreen ? "41vw" : "100%",
+                    position: isFullscreen ? "fixed" : "relative",
+                    top: isFullscreen ? 97 : "auto",
+                    left: isFullscreen ? 8 : "auto",
+                    zIndex: isFullscreen ? 1000 : "auto",
+                  }}
+                />
+                <IconButton
+                  onClick={toggleFullscreen}
+                  style={{
+                    position: 'absolute',
+                    top: isFullscreen ? '-430px' : '8px',
+                    right: isFullscreen ? '8px' : '8px',
+                    zIndex: 1001,
+                  }}
+                >
+                  {isFullscreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
+                </IconButton>
+              </div>
             </div>
           </div>
         </div>
@@ -317,7 +348,7 @@ const PsUpdate = (props) => {
                   color:'#000',
                   height:'36px',
                   padding:'6px 20px 6px 30px ',
-                  borderRadius:'12px',
+                  borderRadius:'8px',
                   '&:hover': {
                     backgroundColor: "#14305a",
                     color:'#fff',
@@ -355,7 +386,7 @@ const PsUpdate = (props) => {
             className="divider"
             onMouseDown={handleMouseDown}
             style={{
-              height: "5px",
+              height: "4px",
               backgroundColor: "#ccc",
               cursor: "row-resize",
               marginBottom: "8px",
@@ -484,7 +515,7 @@ const PsUpdate = (props) => {
                 variant="contained"
                 sx={{
                   backgroundColor: "#14305a",
-                  borderRadius: "12px",
+                  borderRadius: "8px",
                   padding: "8px",
                   width: "16%",
                 }}
