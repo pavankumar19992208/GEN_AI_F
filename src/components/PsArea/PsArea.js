@@ -30,7 +30,7 @@ const PsArea = () => {
   const [syntaxError, setSyntaxError] = useState(null); // Add state for syntax error
 
   useEffect(() => {
-    fetch('https://9fa9-115-98-68-215.ngrok-free.app/api/getFullList')
+    fetch('http://localhost:8000/api/getFullList')
       .then(response => response.json())
       .then(data => setFullListData(data))
       .catch(error => console.error('Error fetching data:', error));
@@ -42,7 +42,7 @@ const PsArea = () => {
 
   const fetchPsDetails = (id) => {
     console.log(id);
-    fetch(`https://9fa9-115-98-68-215.ngrok-free.app/api/psDetails`, {
+    fetch(`http://localhost:8000/api/psDetails`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ const PsArea = () => {
   
     console.log('Payload:', payload); // Print the payload to the console
   
-    fetch('https://9fa9-115-98-68-215.ngrok-free.app/api/runTests', {
+    fetch('http://localhost:8000/api/runTests', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
