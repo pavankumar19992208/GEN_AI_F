@@ -60,7 +60,7 @@ const PsUpdate = () => {
     };
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/saveData', {
+      const response = await fetch('https://9fa9-115-98-68-215.ngrok-free.app/api/saveData', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

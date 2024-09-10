@@ -66,7 +66,7 @@
 }
 
 .hide-button {
-    margin-left: 10px;
+  margin-left: 10px;
   cursor: pointer;
   border: none;
   background: none;
@@ -103,19 +103,63 @@
   align-self: flex-start;
 }
 
-.visualize-content {
-  display: flex;
-  flex-direction: column; /* Change to column layout */
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+.tutor-title {
+  font-weight: bold;
+  color: #ff0000; /* Pink color */
+  margin-bottom: 5px;
+}
+
+.tutor-question {
+  background-color: #1e1e1e;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #333;
+  font-family: 'Courier New', Courier, monospace; /* Nice font for text */
   color: #d4d4d4; /* Light text color */
 }
 
-.chatbot-input {
+.feedback-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  text-shadow: 0 0 5px #007bff, 0 0 10px #007bff, 0 0 15px #007bff, 0 0 20px #007bff;
+}
+
+.feedback-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1001; /* Ensure it is above other elements */
+}
+
+.feedback-content {
   display: flex;
-  padding: 10px;
-  border-top: 1px solid #333; /* Darker border */
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.close-feedback {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  color: #d4d4d4;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.feedback-text {
+  font-family: 'Courier New', Courier, monospace; /* Nice font for text */
+  color: #d4d4d4; /* Light text color */
+  margin-top: 10px;
 }
 
 .chatbot-input textarea {
@@ -149,15 +193,121 @@
   display: flex; /* Flexbox for alignment */
   align-items: center; /* Center items vertically */
   justify-content: center; /* Center items horizontally */
-  
 }
 
 .refresh-icon {
   width: 24px; /* Set the width of the icon */
   height: 24px; /* Set the height of the icon */
 }
+
 .header-buttons {
   display: flex;
   align-items: center;
   gap: 10px; /* Add a 10px gap between the buttons */
+}
+
+.code-block {
+  background-color: #1e1e1e;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #333;
+  font-family: 'Courier New', Courier, monospace; /* Nice font for code */
+  color: #d4d4d4; /* Light text color */
+}
+
+.highlighted-text {
+  font-weight: bold;
+  color: #ffcc00; /* Highlight color */
+}
+
+.mic-button {
+  background: none; /* No background */
+  border: none; /* No border */
+  cursor: pointer; /* Pointer cursor on hover */
+  padding: 5px; /* Padding around the button */
+  display: flex; /* Flexbox for alignment */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+}
+
+.mic-icon {
+  width: 24px; /* Set the width of the icon */
+  height: 24px; /* Set the height of the icon */
+}
+
+.speaker-button {
+  background: none; /* No background */
+  border: none; /* No border */
+  cursor: pointer; /* Pointer cursor on hover */
+  padding: 5px; /* Padding around the button */
+  display: flex; /* Flexbox for alignment */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+}
+
+.speaker-icon {
+  width: 24px; /* Set the width of the icon */
+  height: 24px; /* Set the height of the icon */
+}
+
+.chatbot-input {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #333; /* Darker border */
+  position: relative; /* Add relative positioning */
+}
+
+.loading-animation,
+.mic-loading-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001; /* Ensure it is above other elements */
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(30, 30, 30, 0.8); /* Semi-transparent background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure it is above other elements */
+}
+
+.loading-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: #888;
+}
+
+.loading-dots span {
+  animation: bounce 1s infinite;
+}
+
+.loading-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.loading-dots span:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
