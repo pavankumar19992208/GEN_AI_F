@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ProfileCard from './ProfileCard';
 import CustomTable from '../common/Table';
@@ -26,20 +26,31 @@ const sampleData = [
 
 const DeveloperDashboard = () => {
   const location = useLocation();
+  const [topicList, setTopicList] = useState([]);
   const { data } = location.state || { data: sampleData };
+
+  useEffect(() => {
+    fetch('http://localhost:8000/api/getFullList')
+      .then(response => response.json())
+      .then(data => {
+        setTopicList(data);
+        console.log('Fetched topic list:', data);
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
 
   const handleButtonClick = () => {
     console.log('Button clicked!');
-    console.log("passing: ",location.state )
+    console.log("passing: ", location.state);
     // Add your button click logic here
   };
 
   return (
     <>
-      <NavBar className="navbar" />
+<NavBar showMenuBar={true} showLoginButton={false} className="navbar" />
       <div className="developer-dashboard">
         <div className="profile-card-container">
-          <ProfileCard data={location.state} /> {/* Pass state data to ProfileCard */}
+          <ProfileCard data={location.state || {}} /> {/* Provide default value if location.state is null */}
           <div className="button-wrapper-container">
             <ButtonWrapper onClick={handleButtonClick} /> {/* Add onClick handler */}
           </div>
