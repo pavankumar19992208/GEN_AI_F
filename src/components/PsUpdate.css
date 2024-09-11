@@ -1,0 +1,337 @@
+/* Base styles (for larger screens) */
+.main-container {
+  /* background-color: #14305a; */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 80px); /* Adjust for navbar height */
+  overflow: hidden;
+}
+
+.left-pane {
+  width: 40%;
+  overflow-y: auto;
+  height: 100%;
+  padding: 0px 8px 0px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden; /* Prevent scrolling */
+}
+
+.right-pane {
+  width: 60%;
+  padding: 0px 8px 8px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  box-sizing: border-box;
+  height: 86.3vh; /* Ensure it fits the screen height */
+  overflow: hidden; /* Prevent scrolling */
+}
+
+/* Media Queries for responsiveness */
+
+/* Mobile devices (portrait and landscape) */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left-pane, .right-pane {
+    width: 100%;
+    height: auto;
+  }
+
+  .left-pane {
+    padding: 10px;
+  }
+
+  .right-pane {
+    padding: 10px;
+  }
+
+  .form-container {
+    height: auto;
+  }
+
+  .form-group1 {
+    flex: 1 1 100%; /* Full width on mobile */
+  }
+
+  .language select {
+    width: 100%;
+  }
+
+  
+}
+
+/* Tablets and small desktops */
+@media (min-width: 769px) and (max-width: 1055px) {
+  .left-pane {
+    width: 50%;
+  }
+
+  .right-pane {
+    width: 50%;
+  }
+
+  .form-group1 {
+    flex: 1 1 calc(50% - 10px); /* 2x2 grid */
+  }
+
+  .language select {
+    width: 50%;
+  }
+
+  .submit-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    bottom: -12px;
+    right: 26px;
+  }
+
+  
+}
+
+
+/* Additional styles for other components */
+.divider-horizontal {
+  width: 4px;
+  background-color: #ccc;
+  cursor: col-resize;
+  height: 99%;
+}
+
+.form-container {
+  border: 1px solid #ccc; /* Add border to the form container */
+  padding: 12px 8px;
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  height:85vh;
+  background-color: #f5f9ff;
+
+
+}
+
+.form-group1 .selected {
+  margin-top: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.editor-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0px;
+}
+
+.testcases-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0px 0px;
+
+}
+
+.testcases-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  /* height: 28px; */
+  z-index: 1;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+  width: 98%;
+  color: #000;
+  cursor: pointer;
+  background-color: #e0f7fa00;
+
+
+}
+
+.testcases-header-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.test-case-content {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+
+}
+
+.delete-icon {
+  display: none;
+}
+
+.test-case-content:hover .delete-icon {
+  display: block;
+ 
+ 
+}
+
+
+.testcase {
+  margin-bottom: 10px;
+  position: relative;
+
+}
+
+.test-case-header{
+  background-color: #14305a50;
+  border-radius: 6px;
+  padding: 6px;
+}
+.input-group2 {
+  margin-bottom: 8px;
+}
+
+
+
+.form-group1 {
+  flex: 1 1 calc(50% - 10px); /* 2x2 grid */
+  margin-bottom: 8px;
+}
+
+.form-group1 label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.form-group1 input,
+.form-group1 select {
+  background-color: #14305a10;
+  width: 100%;
+  padding: 8px;
+  border: solid 0.5px #14305a20;
+  box-sizing: border-box;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.form-group1 textarea {
+  background-color: #eaf2ff;
+  width: 100%;
+  padding: 44px 8px;
+  border: solid 0.5px #14305a20;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.problem-statement-textarea {
+  resize: none; /* Only allow vertical resizing */
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+  margin-top: 12px;
+}
+
+.input-wrapper label {
+  margin-right: 10px;
+  min-width: 120px; /* Adjust as needed */
+}
+
+.input-wrapper input {
+  background-color: #14305a10;
+  border: solid 0.5px #14305a20;
+  max-width: 180px;
+  flex: 1;
+  padding: 8px;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.language select {
+  background-color: #14305a27;
+  width: 20%;
+  padding: 10px;
+  border: none;
+  box-sizing: border-box;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.editor-language-container {
+  background-color: #f5f9ff;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.editor {
+  height: 90%;
+  width: 100%;
+}
+
+.dropdown-button {
+  background-color: #14305a;
+  color: rgb(255, 255, 255);
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.dropdown-button:hover {
+  color: #000000;
+  background-color: #14305a27;
+}
+
+.add-icon {
+  cursor: pointer;
+}
+
+.fixed-buttons {
+  position: absolute;
+  bottom: 8.25vh;
+  right: 32px;
+  display: flex;
+  gap: 8px;
+}
+
+.fixed-buttons .submit-button {
+  width: 150px; /* Change the width as needed */
+  height: 6px; /* Change the height as needed */
+  padding: 20px;
+  background-color: #14305a;
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+
+.fixed-buttons .submit-button:hover {
+  background-color: #14305a27;
+  color: #000000;
+}
+
+.dropdown-content {
+  margin-top: 0px;
+
+}
+
+.expand-icon.expanded {
+  transform: rotate(180deg);
+}

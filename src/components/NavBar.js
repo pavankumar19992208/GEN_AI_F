@@ -4,16 +4,15 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button'; // Import the Button component
 import img1 from '../images/Gen_logo.png';
 import './NavBar.css'; // Import the CSS file
-import Login from '../components/login/Login'; // Import the Login component
-import Modal from './common/Modal';
+import SignIn from './login/sign-in/SignIn'; // Import the SignIn component
 
 const NavBar = () => {
-  const [showLogin, setShowLogin] = useState(false);
+  const [showSignIn, setShowSignIn] = useState(false);
 
-  const toggleLogin = () => {
-    setShowLogin(!showLogin);
+
+  const toggleSignIn = () => {
+    setShowSignIn(!showSignIn);
   };
-
   return (
     <div className="appBar">
       <div className="toolbar">
@@ -23,12 +22,10 @@ const NavBar = () => {
           alt="Logo"
           className="logo"
         />
-        <Button variant="contained" onClick={toggleLogin}>Login</Button> {/* Use the Button component */}
+        <Button variant="contained" onClick={toggleSignIn}>Login</Button> {/* Use the Button component */}
         <AccountCircle className="icon" fontSize="large" />
       </div>
-      <Modal show={showLogin} onClose={toggleLogin}>
-      <Login onClose={toggleLogin} />
-      </Modal>
+      {showSignIn && <SignIn  />} {/* Render SignIn component conditionally */}
     </div>
   );
 };

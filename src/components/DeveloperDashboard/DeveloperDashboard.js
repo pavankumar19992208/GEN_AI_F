@@ -30,6 +30,7 @@ const DeveloperDashboard = () => {
 
   const handleButtonClick = () => {
     console.log('Button clicked!');
+    console.log("passing: ",location.state )
     // Add your button click logic here
   };
 
@@ -38,13 +39,13 @@ const DeveloperDashboard = () => {
       <NavBar className="navbar" />
       <div className="developer-dashboard">
         <div className="profile-card-container">
-          <ProfileCard />
+          <ProfileCard data={location.state} /> {/* Pass state data to ProfileCard */}
           <div className="button-wrapper-container">
             <ButtonWrapper onClick={handleButtonClick} /> {/* Add onClick handler */}
           </div>
         </div>
         <div className="table-container">
-          <CustomTable data={data} />
+          <CustomTable data={sampleData} /> {/* Pass sampleData to CustomTable */}
         </div>
       </div>
     </>

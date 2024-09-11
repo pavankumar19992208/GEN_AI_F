@@ -135,7 +135,48 @@ const PsArea = () => {
       setLoading(false); // Set loading to false in case of error
     });
   };
+const renderProblemStatement = () => {
+  if (!psDetails) return null;
 
+  const { title, problemStatement } = psDetails;
+  const formattedProblemStatement = problemStatement
+    .replace(/### /g, '\n')
+    .replace(/#### /g, '\n')
+    .replace(/#/g, '');
+
+  const [statement, ...examples] = formattedProblemStatement.split(/Example \d:/);
+
+  return (
+    <div>
+      <h2 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold', marginBottom: '10px' }}>{title}</h2>
+      <p style={{ fontFamily: 'Georgia, serif', fontSize: '16px', lineHeight: '1.6' }}>{statement.trim()}</p>
+      {examples.length > 0 && (
+        <div>
+          {examples.map((example, index) => {
+            const [input, output] = example.split('Output:');
+            return (
+              <div key={index} style={{ marginBottom: '20px' }}>
+                <h3 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold', marginTop: '20px' }}>Example {index + 1}:</h3>
+                <div style={{ marginBottom: '10px' }}>
+                  <strong>Input:</strong>
+                  <Box component="pre" sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}>
+                    {input.replace('Input:', '').trim()}
+                  </Box>
+                </div>
+                <div>
+                  <strong>Output:</strong>
+                  <Box component="pre" sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}>
+                    {output.trim()}
+                  </Box>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
   return (
     <Box
       sx={{
@@ -179,11 +220,10 @@ const PsArea = () => {
           >
             <ChevronLeftIcon />
           </IconButton>
-          <Paper elevation={3} sx={{ height: '100%', padding: '10px', marginTop: '70px' }}>
+          <Paper elevation={3} sx={{ height: '50vh', padding: '10px', marginTop: '70px' }}>
             {psDetails ? (
               <div>
-                <h2>{psDetails.title}</h2>
-                <p>{psDetails.problemStatement}</p>
+                {renderProblemStatement()}
               </div>
             ) : (
               <List

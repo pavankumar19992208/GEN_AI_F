@@ -1,24 +1,26 @@
 .profile-card {
   display: flex;
-  width: 50vw;
-  height: 25vh;
+  width: 20vw;
 }
 
 .profile-image {
-  height: 23vh;
+  height: 24vh;
   border: 1px solid #ccc;
   border-radius: 20px;
 }
 
 .profile-details {
+  
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 20px;
+  padding-left: 6px;
+  padding-top: 6px;
+
 }
 
 .badge-icon {
-  width: 24px; /* Adjust the size as needed */
-  height: 24px; /* Adjust the size as needed */
+  width: 20px; /* Adjust the size as needed */
+  height: 20px; /* Adjust the size as needed */
   margin-top: 10px; /* Adjust the spacing as needed */
 }
