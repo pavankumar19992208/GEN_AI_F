@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ProfileCard from './ProfileCard';
 import CustomTable from '../common/Table';
 import './DeveloperDashboard.css';
@@ -26,7 +26,10 @@ const sampleData = [
 
 const DeveloperDashboard = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [topicList, setTopicList] = useState([]);
+  const [selectedTopic, setSelectedTopic] = useState(null);
+  const [selectedSubTopic, setSelectedSubTopic] = useState(null);
   const { data } = location.state || { data: sampleData };
 
   useEffect(() => {
@@ -45,9 +48,49 @@ const DeveloperDashboard = () => {
     // Add your button click logic here
   };
 
+  const handleTopicClick = (topic) => {
+    setSelectedTopic(topic);
+    setSelectedSubTopic(null);
+  };
+
+  const handleSubTopicClick = (subTopic) => {
+    setSelectedSubTopic(subTopic);
+  };
+
+  const fetchPsDetails = (id) => {
+    console.log(id);
+    fetch(`http://localhost:8000/api/psDetails`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Problem Statement Details:', data);
+        const dataToSend = {
+          studentDetails: location.state,
+          problemStatementDetails: {
+            topic: selectedTopic,
+            subTopic: selectedSubTopic,
+            problemStatementId: id,
+            problemStatementDetails: data,
+          },
+        };
+        console.log('dataToSend:', dataToSend); // Print dataToSend to console
+        navigate('/Area', { state: dataToSend });
+      })
+      .catch(error => console.error('Error fetching problem statement details:', error));
+  };
+
+  const handleProblemStatementClick = (problemStatementId) => {
+    fetchPsDetails(problemStatementId);
+  };
+
   return (
     <>
-<NavBar showMenuBar={true} showLoginButton={false} className="navbar" />
+      <NavBar showMenuBar={true} showLoginButton={false} className="navbar" />
       <div className="developer-dashboard">
         <div className="profile-card-container">
           <ProfileCard data={location.state || {}} /> {/* Provide default value if location.state is null */}
@@ -57,6 +100,33 @@ const DeveloperDashboard = () => {
         </div>
         <div className="table-container">
           <CustomTable data={sampleData} /> {/* Pass sampleData to CustomTable */}
+        </div>
+        <div className="topic-list-container">
+          <ul>
+            {Object.keys(topicList).map((topic, index) => (
+              <li key={index} onClick={() => handleTopicClick(topic)}>
+                {topic}
+              </li>
+            ))}
+          </ul>
+          {selectedTopic && (
+            <ul>
+              {topicList[selectedTopic].map((subTopic, index) => (
+                <li key={index} onClick={() => handleSubTopicClick(subTopic.subTopic)}>
+                  {subTopic.subTopic}
+                </li>
+              ))}
+            </ul>
+          )}
+          {selectedSubTopic && (
+            <ul>
+              {topicList[selectedTopic].find(sub => sub.subTopic === selectedSubTopic).problemStatements.map((problem, index) => (
+                <li key={index} onClick={() => handleProblemStatementClick(problem.id)}>
+                  {problem.title}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </>

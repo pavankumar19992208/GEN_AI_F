@@ -95,7 +95,7 @@ const ChatBot = ({ code, selectedLanguage, testCases, results, problemStatement 
       conversationHistory
     };
 
-    fetch('https://9fa9-115-98-68-215.ngrok-free.app/assist', {
+    fetch('http://localhost:8000/assist', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
