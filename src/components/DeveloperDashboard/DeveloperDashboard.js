@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import ProfileCard from './ProfileCard';
 import CustomTable from '../common/Table';
 import './DeveloperDashboard.css';
 import NavBar from '../NavBar';
 import ButtonWrapper from '../common/ButtonWrapper'; // Import ButtonWrapper
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
+import { IoMdClose } from "react-icons/io"; // Import the IoMdClose icon
 
 const sampleData = [
   { sNo: 1, topic: 'React', subTopic: 'Hooks', problemStatement: 'UseState Hook', status: 'Completed', attempt: 1 },
@@ -26,11 +33,14 @@ const sampleData = [
 
 const DeveloperDashboard = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const [topicList, setTopicList] = useState([]);
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [selectedSubTopic, setSelectedSubTopic] = useState(null);
-  const { data } = location.state || { data: sampleData };
+  const [showTopicList, setShowTopicList] = useState(false); // State to manage topic list visibility
+
+  const data = location.state && location.state.data ? location.state.data : location.state;
+
+  console.log("dd :", data);
 
   useEffect(() => {
     fetch('http://localhost:8000/api/getFullList')
@@ -43,9 +53,11 @@ const DeveloperDashboard = () => {
   }, []);
 
   const handleButtonClick = () => {
-    console.log('Button clicked!');
-    console.log("passing: ", location.state);
-    // Add your button click logic here
+    setShowTopicList(true); // Show the topic list container
+  };
+
+  const handleCloseButtonClick = () => {
+    setShowTopicList(false); // Hide the topic list container
   };
 
   const handleTopicClick = (topic) => {
@@ -57,77 +69,65 @@ const DeveloperDashboard = () => {
     setSelectedSubTopic(subTopic);
   };
 
-  const fetchPsDetails = (id) => {
-    console.log(id);
-    fetch(`http://localhost:8000/api/psDetails`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Problem Statement Details:', data);
-        const dataToSend = {
-          studentDetails: location.state,
-          problemStatementDetails: {
-            topic: selectedTopic,
-            subTopic: selectedSubTopic,
-            problemStatementId: id,
-            problemStatementDetails: data,
-          },
-        };
-        console.log('dataToSend:', dataToSend); // Print dataToSend to console
-        navigate('/Area', { state: dataToSend });
-      })
-      .catch(error => console.error('Error fetching problem statement details:', error));
-  };
-
-  const handleProblemStatementClick = (problemStatementId) => {
-    fetchPsDetails(problemStatementId);
-  };
-
   return (
     <>
-      <NavBar showMenuBar={true} showLoginButton={false} className="navbar" />
+      <NavBar data={location.state || {}} showMenuBar={true} showLoginButton={false} className="navbar" />
       <div className="developer-dashboard">
-        <div className="profile-card-container">
-          <ProfileCard data={location.state || {}} /> {/* Provide default value if location.state is null */}
-          <div className="button-wrapper-container">
-            <ButtonWrapper onClick={handleButtonClick} /> {/* Add onClick handler */}
+        <div className={`main-content-container ${showTopicList ? 'shift-left' : ''}`}>
+          <div className="profile-card-table-container">
+            <div className="profile-card-container">
+              <ProfileCard data={location.state || {}} /> {/* Provide default value if location.state is null */}
+              {!showTopicList && (
+                <div className="button-wrapper-container">
+                  <ButtonWrapper onClick={handleButtonClick} /> {/* Add onClick handler */}
+                </div>
+              )}
+            </div>
+            <div className="table-container">
+              <CustomTable data={sampleData}  /> {/* Pass sampleData to CustomTable */}
+            </div>
           </div>
         </div>
-        <div className="table-container">
-          <CustomTable data={sampleData} /> {/* Pass sampleData to CustomTable */}
-        </div>
-        <div className="topic-list-container">
-          <ul>
-            {Object.keys(topicList).map((topic, index) => (
-              <li key={index} onClick={() => handleTopicClick(topic)}>
-                {topic}
-              </li>
-            ))}
-          </ul>
-          {selectedTopic && (
-            <ul>
-              {topicList[selectedTopic].map((subTopic, index) => (
-                <li key={index} onClick={() => handleSubTopicClick(subTopic.subTopic)}>
-                  {subTopic.subTopic}
-                </li>
-              ))}
-            </ul>
-          )}
-          {selectedSubTopic && (
-            <ul>
-              {topicList[selectedTopic].find(sub => sub.subTopic === selectedSubTopic).problemStatements.map((problem, index) => (
-                <li key={index} onClick={() => handleProblemStatementClick(problem.id)}>
-                  {problem.title}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        {showTopicList && (
+          <div className="topic-list-container">
+            <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
+                <IoMdClose onClick={handleCloseButtonClick} style={{ cursor: 'pointer', fontSize: '1.6em' }} /> {/* Close button */}
+              </div>
+              <List>
+                {Object.keys(topicList).map((topic, index) => (
+                  <ListItem key={index} disablePadding>
+                    <ListItemButton onClick={() => handleTopicClick(topic)}>
+                      <ListItemText primary={topic} />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+              </List>
+              <Divider />
+              {selectedTopic && (
+                <List>
+                  {topicList[selectedTopic].map((subTopic, index) => (
+                    <ListItem key={index} disablePadding>
+                      <ListItemButton onClick={() => handleSubTopicClick(subTopic.subTopic)}>
+                        <ListItemText primary={subTopic.subTopic} />
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
+                </List>
+              )}
+              <Divider />
+              {selectedSubTopic && (
+                <List>
+                  {topicList[selectedTopic].find(sub => sub.subTopic === selectedSubTopic).problemStatements.map((problem, index) => (
+                    <ListItem key={index} disablePadding>
+                      <ListItemText primary={problem.title} />
+                    </ListItem>
+                  ))}
+                </List>
+              )}
+            </Box>
+          </div>
+        )}
       </div>
     </>
   );

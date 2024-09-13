@@ -40,7 +40,7 @@ function TablePaginationActions(props) {
   };
 
   return (
-    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
+    <Box sx={{ flexShrink: 0, ml: 2.5}}>
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
@@ -96,8 +96,8 @@ const CustomTable = ({ data }) => {
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+    <TableContainer component={Paper} sx={{ borderRadius:'16px'}}>
+      <Table sx={{ minWidth: 500}} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
             <TableCell>S.NO</TableCell>

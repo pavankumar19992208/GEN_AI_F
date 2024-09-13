@@ -6,6 +6,17 @@
   overflow: hidden; /* Hide the scrollbar for the navbar */
 }
 
+.main-content-container {
+  display: flex;
+  width: 100%;
+  justify-content: center; /* Center the main content container */
+  transition: margin-left 0.3s ease; /* Smooth transition when moving to the left */
+}
+
+.main-content-container.shift-left {
+  margin-left: -390px; /* Adjust margin to make space for the topic list container */
+}
+
 .developer-dashboard {
   overflow: hidden;
   display: flex;
@@ -25,6 +36,8 @@
   display: flex;
   justify-content: space-between; /* Aligns the profile card to the left and button to the right */
   position: relative; /* Add relative positioning */
+  flex-direction: column;
+  flex: 1;
 }
 
 .button-wrapper-container {
@@ -59,4 +72,116 @@
   width: 60vw;
   display: flex;
   justify-content: center;
+}
+
+.topic-list-container {
+  position: fixed;
+  right: 122px;
+  top: 110px; /* Adjust for the height of the navbar */
+  width: 360px;
+  height: calc(85% - 60px); /* Adjust for the height of the navbar */
+  background-color: white;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  border-radius: 16px;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+  .developer-dashboard {
+    
+    height: 83vh; /* Adjust height to account for the fixed navbar */
+  }
+
+  .main-content-container {
+    margin-left: 120px;
+    display: flex;
+    width: 100%;
+    justify-content: center; /* Center the main content container */
+    transition: margin-left 0.3s ease; /* Smooth transition when moving to the left */
+  }
+  .main-content-container.shift-left {
+    margin-left: -160px; /* Adjust margin to make space for the topic list container */
+   
+  }
+
+  .topic-list-container {
+    position: fixed;
+    right: 28px;
+    top: 132px; /* Adjust for the height of the navbar */
+    width: 280px;
+    height: calc(85% - 60px); /* Adjust for the height of the navbar */
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    border-radius: 16px;
+  }
+
+  .profile-card-container {
+    width: 80vw;
+  }
+
+  .table-container {
+    width: 84%;
+    margin-top: -12px;
+  }
+
+  .profile-card {
+    width: 30vw;
+    
+  }
+
+  .button-wrapper-container {
+    position: absolute; 
+    bottom: 0;
+    right: 134.5px; 
+  }
+}
+
+@media (max-width: 992px) {
+  .profile-card-container {
+    width: 90vw;
+  }
+
+  .table-container {
+    width: 90vw;
+  }
+
+  .profile-card {
+    width: 40vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-card-container {
+    width: 100vw;
+  }
+
+  .table-container {
+    width: 100vw;
+  }
+
+  .profile-card {
+    width: 50vw;
+  }
+
+  .topic-list-container {
+    right: 0;
+    width: 100%;
+    height: calc(100% - 60px);
+  }
+
+  .main-content-container.shift-left {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .profile-card {
+    width: 70vw;
+  }
+
+  .profile-image {
+    width: 40px;
+  }
 }

@@ -6,6 +6,7 @@ import img from '../images/Welcome.png';
 import SignIn from './login/sign-in/SignIn'; // Import SignIn component
 import SignUp from './login/sign-up/SignUp'; // Import the SignUp component
 import { AiOutlineClose } from 'react-icons/ai';
+
 function Welcome() {
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
@@ -28,14 +29,13 @@ function Welcome() {
 
   return (
     <>
-      <NavBar />
+      <NavBar data = '' showLogoutButton={false} />
       {(showSignIn || showSignUp) && (
-          <div className="close-icon-container">
-            <AiOutlineClose className="close-icon" onClick={handleBackToHome} />
-          </div>
-        )}
+        <div className="close-icon-container">
+          <AiOutlineClose className="close-icon" onClick={handleBackToHome} />
+        </div>
+      )}
       {showSignIn ? (
-        
         <SignIn />
       ) : showSignUp ? (
         <SignUp />

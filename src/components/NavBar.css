@@ -36,6 +36,13 @@
   
 }
 
+/* NavBar.css */
+.logoutButton {
+  margin-left: 16px;
+  background-color: blue;
+  color: white;
+}
+
 .iconButton {
   color: #14305A;
   background: none;
