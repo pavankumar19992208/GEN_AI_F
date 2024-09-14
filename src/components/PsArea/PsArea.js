@@ -12,7 +12,7 @@ import { useLocation } from 'react-router-dom';
 
 const PsArea = () => {
   const location = useLocation();
-  const { problemStatementDetails } = location.state;
+  const { problemStatementDetails, studentDetails } = location.state;
 
   // Print the data received from location.state to the console
   console.log('Location State:', location.state);
@@ -22,9 +22,12 @@ const PsArea = () => {
     code: initialCode = {},
     testCases: initialTestCases = [],
     title = '',
-    problemStatement = ''
+    problemStatement = '',
   } = problemStatementDetails.problemStatementDetails || {};
-
+  const {
+    topic = '',
+    subTopic = ''
+  } = problemStatementDetails || {};
   console.log("code:", initialCode.javascript, "testcases:", initialTestCases, "title:", title, "ps:", problemStatement);
 
   const [code, setCode] = useState(initialCode?.javascript || '');
@@ -70,6 +73,44 @@ const PsArea = () => {
         console.error('Error running code:', error);
         setLoading(false); // Set loading to false in case of error
       });
+  };
+
+  const submitCode = () => {
+    console.log('Submit Code button clicked'); // Add log to check if function is called
+    if (results.every(result => result.result === 'pass')) {
+      const payload = {
+        studentDetails: {
+          email: studentDetails.data.email,
+          id: studentDetails.data.id,
+          name: studentDetails.data.name,
+          password: studentDetails.data.password
+        },
+        topic,
+        subTopic,
+        title,
+        code,
+        language: selectedLanguage,
+      };
+
+      console.log('Submit Payload:', payload); // Print the payload to the console
+
+      fetch('http://localhost:8000/api/addresult', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Submit Code Response:', data);
+        })
+        .catch(error => {
+          console.error('Error submitting code:', error);
+        });
+    } else {
+      console.log('Not all test cases passed');
+    }
   };
 
   const renderProblemStatement = () => {
@@ -194,9 +235,14 @@ const PsArea = () => {
         }}
       >
         <Paper elevation={3} sx={{ height: '100%' }}>
-          <Button variant="contained" color="primary" onClick={runCode} sx={{ margin: '10px' }}>
-            Run Code
-          </Button>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
+            <Button variant="contained" color="primary" onClick={runCode}>
+              Run Code
+            </Button>
+            <Button variant="contained" color="secondary" onClick={submitCode}>
+              Submit
+            </Button>
+          </Box>
           {syntaxError && (
             <Box sx={{ color: 'red', margin: '10px', fontSize: '11.5px' }}>
               <pre><code>{syntaxError}</code></pre>
