@@ -1,59 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Avatar, TextField, Grid, Typography, Container, IconButton, Button, Box } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Avatar, TextField, Grid, Typography, Container, IconButton, Button, Box } from '@mui/material';
 import { MdEdit } from "react-icons/md"; // Import the MdEdit icon
 import NavBar from '../NavBar'; // Import the NavBar component
 import ProfilePic from '../../images/profilepic.png';
 import { useLocation } from 'react-router-dom';
-
-
-const useStyles = makeStyles((theme) => ({
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-    width: 80,
-    height: 80,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(0),
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: '20vh',
-  },
-  editIcon: {
-    marginLeft: theme.spacing(1),
-  },
-  updateButton: {
-    marginTop: theme.spacing(2),
-  },
-  header: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-}));
-
+import './ProfileDetails.css'; // Import the CSS file
 
 const ProfileDetails = () => {
   const location = useLocation();
-   const classes = useStyles();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const data = location.state && location.state.data ? location.state.data : location.state;
-
-
 
   const handleUpdate = async () => {
     // Update user details in the backend
@@ -79,21 +37,21 @@ const ProfileDetails = () => {
 
   return (
     <>
-      <NavBar showMenuBar={true} showLoginButton={false} className="navbar" />
-      <Container component="main" maxWidth="xs" className={classes.container}>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar} src={ProfilePic} >
+      <NavBar data={location.state || {}} showMenuBar={true} showLoginButton={false} className="navbar" />
+      <Container component="main" maxWidth="xs" className="container">
+        <div className="paper">
+          <Avatar className="avatar" src={ProfilePic} >
             {/* You can place an icon or image here */}
           </Avatar>
-          <div className={classes.header}>
+          <div className="header">
             <Typography component="h1" variant="h5">
               Profile Details
             </Typography>
-            <IconButton className={classes.editIcon} onClick={() => setIsEditing(!isEditing)}>
+            <IconButton className="editIcon" onClick={() => setIsEditing(!isEditing)}>
               <MdEdit />
             </IconButton>
           </div>
-          <form className={classes.form} noValidate>
+          <form className="form" noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} style={{ display: 'flex', alignItems: 'center' }}>
                 <TextField
@@ -135,7 +93,7 @@ const ProfileDetails = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  className={classes.updateButton}
+                  className="updateButton"
                   onClick={handleUpdate}
                 >
                   Update
