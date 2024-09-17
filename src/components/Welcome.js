@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import './Welcome.css';
 import NavBar from './NavBar';
 import img from '../images/Welcome.png';
@@ -9,7 +9,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 function Welcome() {
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const toggleSignIn = () => {
     setShowSignIn(!showSignIn);

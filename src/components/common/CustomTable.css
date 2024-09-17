@@ -1,0 +1,8 @@
+.table-head {
+  font-weight: bold !important;
+}
+
+.status-passed {
+  color: green !important;
+  font-weight: bold;
+}

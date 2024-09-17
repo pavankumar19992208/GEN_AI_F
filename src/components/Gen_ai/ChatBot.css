@@ -236,6 +236,7 @@
 }
 
 .speaker-button {
+  color: #ffffff;
   background: none; /* No background */
   border: none; /* No border */
   cursor: pointer; /* Pointer cursor on hover */
@@ -246,6 +247,7 @@
 }
 
 .speaker-icon {
+  color: #ffffff;
   width: 24px; /* Set the width of the icon */
   height: 24px; /* Set the height of the icon */
 }

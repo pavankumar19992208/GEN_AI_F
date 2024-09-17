@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import {
@@ -13,11 +13,17 @@ import {
   Paper,
   TableHead,
   IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
 } from '@mui/material';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import './CustomTable.css'; // Import the CSS file
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -81,8 +87,10 @@ TablePaginationActions.propTypes = {
 };
 
 const CustomTable = ({ data }) => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [open, setOpen] = useState(false);
+  const [selectedCode, setSelectedCode] = useState('');
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -93,65 +101,99 @@ const CustomTable = ({ data }) => {
     setPage(0);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+  const handleClickOpen = (code) => {
+    setSelectedCode(code);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedCode('');
+  };
+
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-        <TableHead>
-          <TableRow>
-            <TableCell>S.NO</TableCell>
-            <TableCell>TOPIC</TableCell>
-            <TableCell>SUB TOPIC</TableCell>
-            <TableCell>PROBLEM STATEMENT</TableCell>
-            <TableCell>STATUS</TableCell>
-            <TableCell>ATTEMPT</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(rowsPerPage > 0
-            ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : data
-          ).map((row, index) => (
-            <TableRow key={index}>
-              <TableCell>{row.sNo}</TableCell>
-              <TableCell>{row.topic}</TableCell>
-              <TableCell>{row.subTopic}</TableCell>
-              <TableCell>{row.problemStatement}</TableCell>
-              <TableCell>{row.status}</TableCell>
-              <TableCell>{row.attempt}</TableCell>
+    <>
+      <TableContainer component={Paper} style={{ height: '55vh', display: 'flex', flexDirection: 'column' }}>
+        <Table sx={{ minWidth: 500, flex: '1 1 auto' }} aria-label="custom pagination table">
+          <TableHead>
+            <TableRow>
+              <TableCell className="table-head" sx={{ height: 50 }}>S.No</TableCell>
+              <TableCell className="table-head" sx={{ height: 50 }}>Topic</TableCell>
+              <TableCell className="table-head" sx={{ height: 50 }}>SubTopic</TableCell>
+              <TableCell className="table-head" sx={{ height: 50 }}>Title</TableCell>
+              <TableCell className="table-head" sx={{ height: 50 }}>Code</TableCell>
+              <TableCell className="table-head" sx={{ height: 50 }}>Language</TableCell>
+              <TableCell className="table-head" sx={{ height: 50 }}>Status</TableCell>
             </TableRow>
-          ))}
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
-            </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={6}
-              count={data.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              slotProps={{
-                select: {
-                  inputProps: {
-                    'aria-label': 'rows per page',
+          </TableHead>
+          <TableBody>
+            {(rowsPerPage > 0
+              ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : data
+            ).map((row, index) => (
+              <TableRow key={index}>
+                <TableCell sx={{ height: 50 }}>{index + 1}</TableCell>
+                <TableCell sx={{ height: 50 }}>{row.topic}</TableCell>
+                <TableCell sx={{ height: 50 }}>{row.subTopic}</TableCell>
+                <TableCell sx={{ height: 50 }}>{row.title}</TableCell>
+                <TableCell sx={{ height: 50 }}>
+                  <span
+                    style={{ color: 'blue', cursor: 'pointer' }}
+                    onClick={() => handleClickOpen(row.code)}
+                  >
+                    code
+                  </span>
+                </TableCell>
+                <TableCell sx={{ height: 50 }}>{row.language}</TableCell>
+                <TableCell sx={{ height: 50 }} className={row.status === 'Passed' ? 'status-passed' : ''}>
+                  {row.status}
+                </TableCell>
+              </TableRow>
+            ))}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 50 * emptyRows }}>
+                <TableCell colSpan={7} />
+              </TableRow>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                colSpan={7}
+                count={data.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                slotProps={{
+                  select: {
+                    inputProps: {
+                      'aria-label': 'rows per page',
+                    },
+                    native: true,
                   },
-                  native: true,
-                },
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+      <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
+        <DialogTitle sx={{ color: 'blue' }}>Code</DialogTitle>
+        <DialogContent>
+          <pre>{selectedCode}</pre>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 
@@ -161,9 +203,10 @@ CustomTable.propTypes = {
       sNo: PropTypes.number.isRequired,
       topic: PropTypes.string.isRequired,
       subTopic: PropTypes.string.isRequired,
-      problemStatement: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      code: PropTypes.string.isRequired,
+      language: PropTypes.string.isRequired,
       status: PropTypes.string.isRequired,
-      attempt: PropTypes.number.isRequired,
     })
   ).isRequired,
 };

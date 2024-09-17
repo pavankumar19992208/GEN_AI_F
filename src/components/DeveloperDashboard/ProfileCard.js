@@ -4,7 +4,10 @@ import './ProfileCard.css';
 import BadgeIcon from '../../images/svg/badges/gold.svg'; // Import the SVG file
 import ProfilePic from '../../images/profilepic.png';
 
-const ProfileCard = ({ data }) => {
+const ProfileCard = ({ data, submissionCount, totalProblemStatements }) => {
+  const solvedPercentage = (submissionCount / totalProblemStatements) * 100;
+  const solvedColor = solvedPercentage > 50 ? 'green' : 'red';
+
   return (
     <Card className="profile-card" sx={{ borderRadius: 4 }}>
       <Box className="profile-details">
@@ -25,7 +28,7 @@ const ProfileCard = ({ data }) => {
               </Stack>
               <Stack spacing={1}> {/* Increase the gap between Typography components */}
                 <Typography variant="body2" color="text.secondary">
-                  Problems Solved : 42
+                  Problems Solved : <span style={{ color: solvedColor }}>{submissionCount}</span> / {totalProblemStatements}
                 </Typography>
                 <Typography 
                   variant="body2" 
