@@ -129,31 +129,39 @@ const CustomTable = ({ data }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {(rowsPerPage > 0
-              ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              : data
-            ).map((row, index) => (
-              <TableRow key={index}>
-                <TableCell sx={{ height: 50 }}>{index + 1}</TableCell>
-                <TableCell sx={{ height: 50 }}>{row.topic}</TableCell>
-                <TableCell sx={{ height: 50 }}>{row.subTopic}</TableCell>
-                <TableCell sx={{ height: 50 }}>{row.title}</TableCell>
-                <TableCell sx={{ height: 50 }}>
-                  <span
-                    style={{ color: 'blue', cursor: 'pointer' }}
-                    onClick={() => handleClickOpen(row.code)}
-                  >
-                    code
-                  </span>
-                </TableCell>
-                <TableCell sx={{ height: 50 }}>{row.language}</TableCell>
-                <TableCell sx={{ height: 50 }} className={row.status === 'Passed' ? 'status-passed' : ''}>
-                  {row.status}
+            {data.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={7} sx={{ textAlign: 'center', opacity: 0.8 }}>
+                  No problems solved
                 </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              (rowsPerPage > 0
+                ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                : data
+              ).map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell sx={{ height: 30, fontSize: '0.875rem' }}>{index + 1}</TableCell>
+                  <TableCell sx={{ height: 30, fontSize: '0.875rem' }}>{row.topic}</TableCell>
+                  <TableCell sx={{ height: 30, fontSize: '0.875rem' }}>{row.subTopic}</TableCell>
+                  <TableCell sx={{ height: 30, fontSize: '0.875rem' }}>{row.title}</TableCell>
+                  <TableCell sx={{ height: 30, fontSize: '0.875rem' }}>
+                    <span
+                      style={{ color: 'blue', cursor: 'pointer' }}
+                      onClick={() => handleClickOpen(row.code)}
+                    >
+                      code
+                    </span>
+                  </TableCell>
+                  <TableCell sx={{ height: 30, fontSize: '0.875rem' }}>{row.language}</TableCell>
+                  <TableCell sx={{ height: 30, fontSize: '0.875rem' }} className={row.status === 'Passed' ? 'status-passed' : ''}>
+                    {row.status}
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
             {emptyRows > 0 && (
-              <TableRow style={{ height: 50 * emptyRows }}>
+              <TableRow style={{ height: 30 * emptyRows }}>
                 <TableCell colSpan={7} />
               </TableRow>
             )}

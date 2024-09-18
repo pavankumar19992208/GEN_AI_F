@@ -9,6 +9,10 @@ import Button from '@mui/material/Button';
 import TestCases from './TestCases'; // Import the new component
 import ChatBot from '../Gen_ai/Bot'; // Import the ChatBot component
 import { useLocation } from 'react-router-dom';
+import Modal from '../common/Modal'; // Import the Modal component
+import Lottie from 'react-lottie-player'; // Import Lottie player
+import tickAnimation from '../common/json/tick.json'; // Import the tick animation
+import Typography from '@mui/material/Typography';
 
 const PsArea = () => {
   const location = useLocation();
@@ -37,6 +41,8 @@ const PsArea = () => {
   const [loading, setLoading] = useState(false); // Add state for loading
   const [syntaxError, setSyntaxError] = useState(null); // Add state for syntax error
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false); // Add state for success modal
+  const [successMessage, setSuccessMessage] = useState(''); // Add state for success message
 
   const runCode = () => {
     console.log('Run Code button clicked'); // Add log to check if function is called
@@ -104,6 +110,8 @@ const PsArea = () => {
         .then(response => response.json())
         .then(data => {
           console.log('Submit Code Response:', data);
+          setSuccessMessage('Code submitted successfully!'); // Set success message
+          setShowSuccessModal(true); // Show success modal
         })
         .catch(error => {
           console.error('Error submitting code:', error);
@@ -253,6 +261,20 @@ const PsArea = () => {
 
         <ChatBot code={code} selectedLanguage={selectedLanguage} testCases={testCases} results={results} psDetails={problemStatementDetails.problemStatementDetails} /> {/* Add the ChatBot component here */}
       </Box>
+
+      <Modal show={showSuccessModal} onClose={() => setShowSuccessModal(false)}>
+        <Box sx={{ textAlign: 'center' }}>
+          <Lottie
+            loop
+            animationData={tickAnimation}
+            play
+            style={{ width: '150px', height: '150px', margin: '0 auto' }}
+          />
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            {successMessage}
+          </Typography>
+        </Box>
+      </Modal>
     </Box>
   );
 };

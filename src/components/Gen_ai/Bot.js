@@ -189,7 +189,7 @@ const ChatBot = ({ code, selectedLanguage, testCases, results, problemStatement 
             </div>
             <div className="header-buttons">
               <IconButton onClick={() => speakText(messages[messages.length - 1]?.text)} className="speaker-button">
-                {isSpeaking ? <FaStop className="speaker-icon" /> : <FaVolumeUp className="speaker-icon" />}
+                {isSpeaking ? <FaStop className="speaker-icon stop-icon" /> : <FaVolumeUp className="speaker-icon" />}
               </IconButton>
               <IconButton onClick={sendDataToBackend} className="refresh-button">
                 <img src={refreshIcon} alt="Refresh Icon" className="refresh-icon" />

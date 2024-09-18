@@ -252,6 +252,10 @@
   height: 24px; /* Set the height of the icon */
 }
 
+.stop-icon {
+  color: red; /* Set the stop icon color to red */
+}
+
 .chatbot-input {
   display: flex;
   padding: 10px;
