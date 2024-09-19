@@ -86,6 +86,10 @@ export default function SignIn(props) {
 
       try {
         const backendUrl = process.env.REACT_APP_BACKEND_URL;
+        if (!backendUrl) {
+          console.error('REACT_APP_BACKEND_URL is not defined');
+          return;
+      }
         const response = await fetch(`${backendUrl}/dsignin`, {
           method: 'POST',
           headers: {
