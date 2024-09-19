@@ -100,7 +100,7 @@ const PsArea = () => {
 
       console.log('Submit Payload:', payload); // Print the payload to the console
 
-      fetch('http://localhost:8000/api/addresult', {
+      fetch(`${backendUrl}/api/addresult`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
