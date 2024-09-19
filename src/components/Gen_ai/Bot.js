@@ -22,6 +22,7 @@ const ChatBot = ({ code, selectedLanguage, testCases, results, problemStatement 
   const [isLoading, setIsLoading] = useState(false); // State to control loading animation
   const [isMicLoading, setIsMicLoading] = useState(false); // State to control mic loading animation
   const messagesEndRef = useRef(null); // Ref to scroll to the latest message
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     if (selectedLanguage === 'javascript' && code.includes('bubbleSort')) {
@@ -95,7 +96,7 @@ const ChatBot = ({ code, selectedLanguage, testCases, results, problemStatement 
       conversationHistory
     };
 
-    fetch('http://localhost:8000/assist', {
+    fetch(`${backendUrl}/assist`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

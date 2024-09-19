@@ -17,9 +17,11 @@ const DeveloperDashboard = () => {
   const [selectedSubTopic, setSelectedSubTopic] = useState(null);
   const [isContainerOpen, setIsContainerOpen] = useState(false);
   const { data } = location.state || {};
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/getFullList')
+    fetch(`${backendUrl}/api/getFullList`)
       .then(response => response.json())
       .then(data => {
         setTopicList(data);
@@ -30,7 +32,7 @@ const DeveloperDashboard = () => {
 
   useEffect(() => {
     console.log('Fetching code submissions for ID:', data.id); // Print data.id to the console
-    fetch('http://localhost:8000/api/getCodeSubmissions', {
+    fetch(`${backendUrl}/api/getCodeSubmissions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -76,31 +78,32 @@ const DeveloperDashboard = () => {
   };
 
   const fetchPsDetails = (id) => {
-    console.log(id);
-    fetch(`http://localhost:8000/api/psDetails`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Problem Statement Details:', data);
-        const dataToSend = {
-          studentDetails: location.state,
-          problemStatementDetails: {
-            topic: selectedTopic,
-            subTopic: selectedSubTopic,
-            problemStatementId: id,
-            problemStatementDetails: data,
-          },
-        };
-        console.log('dataToSend:', dataToSend); // Print dataToSend to console
-        navigate('/Area', { state: dataToSend });
+      console.log(id);
+      const backendUrl = process.env.REACT_APP_BACKEND_URL;
+      fetch(`${backendUrl}/api/psDetails`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
       })
-      .catch(error => console.error('Error fetching problem statement details:', error));
-  };
+        .then(response => response.json())
+        .then(data => {
+          console.log('Problem Statement Details:', data);
+          const dataToSend = {
+            studentDetails: location.state,
+            problemStatementDetails: {
+              topic: selectedTopic,
+              subTopic: selectedSubTopic,
+              problemStatementId: id,
+              problemStatementDetails: data,
+            },
+          };
+          console.log('dataToSend:', dataToSend); // Print dataToSend to console
+          navigate('/Area', { state: dataToSend });
+        })
+        .catch(error => console.error('Error fetching problem statement details:', error));
+    };
 
   const handleProblemStatementClick = (problemStatementId) => {
     fetchPsDetails(problemStatementId);

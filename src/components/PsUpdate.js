@@ -40,7 +40,8 @@ const PsUpdate = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/getList');
+        const backendUrl = process.env.REACT_APP_BACKEND_URL;
+        const response = await fetch(`${backendUrl}/api/getList`);
         const data = await response.json();
         setListTopics(data);
       } catch (error) {

@@ -31,3 +31,6 @@ jobs:
 
     - name: Deploy to App Engine
       run: gcloud app deploy --quiet
+
+    - name: Set environment variable
+      run: echo "REACT_APP_BACKEND_URL=${{ secrets.BACKEND_URL }}" >> $GITHUB_ENV

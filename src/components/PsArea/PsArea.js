@@ -43,7 +43,7 @@ const PsArea = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false); // Add state for success modal
   const [successMessage, setSuccessMessage] = useState(''); // Add state for success message
-
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const runCode = () => {
     console.log('Run Code button clicked'); // Add log to check if function is called
     setLoading(true); // Set loading to true when run code is clicked
@@ -55,7 +55,7 @@ const PsArea = () => {
 
     console.log('Payload:', payload); // Print the payload to the console
 
-    fetch('http://localhost:8000/api/runTests', {
+    fetch(`${backendUrl}/api/runTests`,{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

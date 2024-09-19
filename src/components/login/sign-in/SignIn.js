@@ -85,7 +85,8 @@ export default function SignIn(props) {
       };
 
       try {
-        const response = await fetch('http://127.0.0.1:8000/dsignin', {
+        const backendUrl = process.env.REACT_APP_BACKEND_URL;
+        const response = await fetch(`${backendUrl}/dsignin`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
