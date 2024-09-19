@@ -18,10 +18,15 @@ jobs:
       with:
         node-version: '20'
 
+    - name: Set environment variable
+      run: echo "REACT_APP_BACKEND_URL=${{ secrets.BACKEND_URL }}" >> $GITHUB_ENV
+
     - name: Install dependencies
       run: npm install
 
     - name: Build the project
+      env:
+        REACT_APP_BACKEND_URL: ${{ secrets.BACKEND_URL }}
       run: CI=false npm run build  # Disable treating warnings as errors
 
     - name: Authenticate to Google Cloud
@@ -31,6 +36,3 @@ jobs:
 
     - name: Deploy to App Engine
       run: gcloud app deploy --quiet
-
-    - name: Set environment variable
-      run: echo "REACT_APP_BACKEND_URL=${{ secrets.BACKEND_URL }}" >> $GITHUB_ENV
